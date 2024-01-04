@@ -1,7 +1,12 @@
 import { styled } from "styled-components";
+import { useState } from "react";
 import "./App.css";
 import Nav from "./Components/Nav";
 import head from "./assets/head.png";
+import Eachfeature from "./Components/Eachfeature";
+import collect from "./assets/collect.png";
+import manage from "./assets/manage.png";
+import analyze from "./assets/analyze.png";
 
 const Container = styled.div`
   width: 100%;
@@ -65,7 +70,35 @@ const LinkBtn = styled.a`
   }
 `;
 
+const Features = styled.div`
+  display: flex;
+  flex-direction: column;
+  /* justify-content: space-evenly; */
+  align-items: center;
+  min-height: 600px;
+
+  h1 {
+    font-size: 32px;
+  }
+  p {
+    font-size: 18px;
+  }
+  button {
+    text-transform: uppercase;
+    font-size: 12px;
+    border: none;
+    border-radius: 3px;
+    &:hover {
+      background-color: #fbefa7;
+    }
+  }
+`;
+const FeatureBtnGroup = styled.div``;
+
 function App() {
+  const [iscollect, setiscollect] = useState(true);
+  const [ismanage, setismanage] = useState(false);
+  const [isanalyze, setisanalyze] = useState(false);
   return (
     <Container>
       <Nav />
@@ -91,6 +124,62 @@ function App() {
           </Section>
         </Header>
       </HeaderContainder>
+      <Features>
+        <h1>Our Features</h1>
+        <p>Explore the power of eFeedbackPro</p>
+        <FeatureBtnGroup>
+          <button
+            onClick={() => {
+              setiscollect(true);
+              setisanalyze(false);
+              setismanage(false);
+            }}
+          >
+            Collect
+          </button>
+          <button
+            onClick={() => {
+              setiscollect(false);
+              setisanalyze(false);
+              setismanage(true);
+            }}
+          >
+            Manage
+          </button>
+          <button
+            onClick={() => {
+              setiscollect(false);
+              setisanalyze(true);
+              setismanage(false);
+            }}
+          >
+            Analyze
+          </button>
+        </FeatureBtnGroup>
+
+        {iscollect && (
+          <Eachfeature
+            pic={collect}
+            heading="Effortless Feedback Collection"
+            explanation="Collect feedback from multiple channels in a single place."
+          />
+        )}
+        {ismanage && (
+          <Eachfeature
+            pic={manage}
+            heading="Streamlined Feedback Management"
+            explanation="Organize and prioritize feedback to focus on what matters most."
+          />
+        )}
+
+        {isanalyze && (
+          <Eachfeature
+            pic={analyze}
+            heading="Insightful Feedback Analysis"
+            explanation="Turn feedback into actionable insights with our powerful analysis tools."
+          />
+        )}
+      </Features>
     </Container>
   );
 }
