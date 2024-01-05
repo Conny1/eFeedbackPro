@@ -95,6 +95,61 @@ const Features = styled.div`
 `;
 const FeatureBtnGroup = styled.div``;
 
+const Freetrial = styled.div`
+  background-color: #fbd92d;
+  min-height: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  section {
+    width: 80%;
+    max-width: 1000px;
+    height: 50vh;
+    outline: 1px solid #fff;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  h2 {
+    font-size: 32px;
+    max-width: 500px;
+    text-align: center;
+    margin-bottom: 0;
+  }
+  p {
+    margin-top: 0;
+    margin-bottom: 40px;
+    font-weight: 450;
+  }
+`;
+
+const Footer = styled.div`
+  background-color: #f6f6f6;
+  display: flex;
+  height: 200px;
+  justify-content: space-between;
+  padding: 10px;
+  align-items: center;
+  section {
+    display: flex;
+    flex-direction: column;
+  }
+`;
+const FooterLinks = styled.a`
+  font-size: 15px;
+
+  color: black;
+  text-decoration: none;
+  transition: 1s;
+  &:hover {
+    color: #fbd92d;
+  }
+`;
+
 function App() {
   const [iscollect, setiscollect] = useState(true);
   const [ismanage, setismanage] = useState(false);
@@ -180,6 +235,29 @@ function App() {
           />
         )}
       </Features>
+      <Freetrial>
+        <section>
+          <h2>Ready to revolutionize your feedback management?</h2>
+          <p>Start your free trial today.</p>
+          <LinkBtn style={{ backgroundColor: "#fff" }}> Get Started </LinkBtn>
+        </section>
+      </Freetrial>
+      <Footer>
+        <section>
+          <p>@ {new Date().getFullYear()} FeedbackPro. All rights reserved.</p>
+        </section>
+        <section>
+          <h3>Company</h3>
+          <FooterLinks>About Us</FooterLinks>
+          <FooterLinks>Contact Us</FooterLinks>
+        </section>
+
+        <section>
+          <h3>Resources</h3>
+          <FooterLinks>Blog</FooterLinks>
+          <FooterLinks>Help Center</FooterLinks>
+        </section>
+      </Footer>
     </Container>
   );
 }
