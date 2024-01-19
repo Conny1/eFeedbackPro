@@ -1,10 +1,31 @@
 "use client";
-import React, { useState } from "react";
-import { FeedbackForm } from "../components/FeedbackForm";
-import { Feedbackitem } from "../components/Feedbackitem";
+import React, { useEffect, useState } from "react";
+import FeedbackForm from "../components/FeedbackForm";
+import Feedbackitem from "../components/Feedbackitem";
+import { Feedback } from "../../state/types";
+import { handleFeedbackErrors } from "@/helperfunctions/helperfunctions";
 
-export function SubmitFeedback() {
+function SubmitFeedback() {
   const [feebackFormModal, setfeebackFormModal] = useState(false);
+  const [feedback, setfeedback] = useState<Feedback[]>([]);
+
+  useEffect(() => {
+    const fetchFeedback = async () => {
+      const id = "65a795adda605819ef4243fc";
+      try {
+        const data = await fetch(`./api/feedback/${id}`);
+        const resp = await data.json();
+        handleFeedbackErrors(resp.status);
+        if (resp.data) {
+          setfeedback(resp.data);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchFeedback();
+  }, []);
 
   return (
     <main className=" relative flex min-h-screen   flex-col   items-center ">
@@ -26,8 +47,9 @@ export function SubmitFeedback() {
         </div>
 
         <div className="px-5 shadow ">
-          <Feedbackitem />
-          <Feedbackitem />
+          {feedback.map((item) => {
+            return <Feedbackitem key={item._id} {...item} />;
+          })}
         </div>
       </div>
       {/* modal fro collecting feedback */}
@@ -37,3 +59,5 @@ export function SubmitFeedback() {
     </main>
   );
 }
+
+export default SubmitFeedback;

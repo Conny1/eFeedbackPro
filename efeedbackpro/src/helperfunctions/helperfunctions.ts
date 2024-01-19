@@ -18,3 +18,20 @@ export const handleAuthErrors = (status: number) => {
 
   return message;
 };
+
+export const handleFeedbackErrors = (status: number) => {
+  let message = "";
+  switch (status) {
+    case 404:
+      message = "No feedback yet";
+
+      break;
+
+    case 500:
+      message = "Server Error";
+
+      break;
+  }
+
+  return message;
+};
