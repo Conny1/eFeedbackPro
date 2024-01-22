@@ -1,15 +1,17 @@
 import React from "react";
 
-const Comments = () => {
+type Props = {
+  comment: string;
+  createdAt: Date;
+};
+
+const Comments = ({ comment, createdAt }: Props) => {
   return (
     <div className="mb-4">
-      <p className="text-xs font-semibold text-slate-800 ">
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Consectetur
-        sed voluptatibus enim, magni labore doloremque a tempora maiores
-        voluptatem nulla recusandae iusto, qui laboriosam omnis obcaecati,
-        explicabo pariatur in. Vitae!
+      <p className="text-xs font-semibold text-slate-800 ">{comment}</p>
+      <p className="text-xs text-slate-500">
+        {new Date(createdAt).toDateString()}
       </p>
-      <p className="text-xs text-slate-500">Mbuya a few seconds ago</p>
     </div>
   );
 };

@@ -2,14 +2,17 @@
 import React, { useState } from "react";
 import { FaCaretUp } from "react-icons/fa";
 import FeedbackItemModal from "./FeedbackItemModal";
+import { Comments } from "@/state/types";
 
 type Props = {
   description: string;
   title: string;
   votes: number;
+  comments: Comments[];
+  _id: string;
 };
 
-const Feedbackitem = ({ description, title, votes }: Props) => {
+const Feedbackitem = ({ description, title, votes, comments, _id }: Props) => {
   const [feebackItemModal, setfeebackItemModal] = useState(false);
 
   return (
@@ -20,11 +23,14 @@ const Feedbackitem = ({ description, title, votes }: Props) => {
           <FaCaretUp className="text-3xl" /> {votes}
         </button>
       </div>
-      <p className="text-sm">{description}</p>
+      <p className="text-sm">{description.substring(0, 200)}...</p>
 
       {feebackItemModal && (
         <FeedbackItemModal
-          feebackItemModal={feebackItemModal}
+          description={description}
+          title={title}
+          votes={votes}
+          _id={_id}
           setfeebackItemModal={setfeebackItemModal}
         />
       )}

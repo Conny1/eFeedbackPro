@@ -35,3 +35,20 @@ export const handleFeedbackErrors = (status: number) => {
 
   return message;
 };
+
+export const handleCommentsErrors = (status: number) => {
+  let message = "";
+  switch (status) {
+    case 404:
+      message = "Be the first to live a comment";
+
+      break;
+
+    case 500:
+      message = "Server Error";
+
+      break;
+  }
+
+  return message;
+};

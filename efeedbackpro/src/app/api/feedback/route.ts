@@ -54,11 +54,19 @@ export async function PUT(request: NextResponse) {
   try {
     const reqBody = await request.json();
 
-    await Feedback.findByIdAndUpdate(reqBody.feedbackid, {
-      $inc: { votes: 1 },
-    });
+    const rsp = await Feedback.findByIdAndUpdate(
+      reqBody.feedbackid,
+      {
+        $inc: { votes: 1 },
+      },
+      { new: true }
+    );
 
-    return NextResponse.json({ status: 200, message: "voted" });
+    return NextResponse.json({
+      status: 200,
+      message: "voted",
+      data: rsp.votes,
+    });
   } catch (error) {
     NextResponse.json({ message: "Server error", status: 500 });
   }

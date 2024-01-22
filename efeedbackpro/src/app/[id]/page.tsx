@@ -37,7 +37,8 @@ function SubmitFeedback() {
           </p>
         </div>
 
-        <div className="bg-slate-200 p-1 px-5 flex justify-end ">
+        <div className="bg-slate-200 p-1 px-5 flex justify-between flex-col-reverse md:flex-row ">
+          <p>Vote for feedback of new features</p>
           <button
             onClick={() => setfeebackFormModal(true)}
             className="bg-blue-400 text-white p-1 rounded "
