@@ -13,7 +13,7 @@ export async function GET(
   const id = params.businessid;
 
   try {
-    const data = await Feedback.find({ business: id }).populate("comments");
+    const data = await Feedback.find({ business: id });
 
     if (data.length === 0) {
       return NextResponse.json({ message: "Not found", status: 404 });

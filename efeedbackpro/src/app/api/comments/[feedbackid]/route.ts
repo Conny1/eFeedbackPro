@@ -1,10 +1,13 @@
+import { connectToDb } from "@/dbconfig/dbconfig";
 import Comment from "@/models/CommentModel";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
+
+connectToDb();
 
 // @descrition GET all a comments by feedback
 // @route   /api/comment -GET
 export async function GET(
-  request: NextResponse,
+  request: NextRequest,
   { params }: { params: { feedbackid: string } }
 ) {
   try {

@@ -1,6 +1,9 @@
+import { connectToDb } from "@/dbconfig/dbconfig";
 import Comment from "@/models/CommentModel";
 import Feedback from "@/models/FeedbackModel";
 import { NextResponse } from "next/server";
+
+connectToDb();
 
 // @descrition Give a comment
 // @route   /api/comment -POST
