@@ -52,3 +52,20 @@ export const handleCommentsErrors = (status: number) => {
 
   return message;
 };
+
+export const handleBusinessErrors = (status: number) => {
+  let message = "";
+  switch (status) {
+    case 404:
+      message = "No Product yet Yet";
+
+      break;
+
+    case 500:
+      message = "Server Error";
+
+      break;
+  }
+
+  return message;
+};

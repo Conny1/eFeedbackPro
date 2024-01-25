@@ -1,46 +1,53 @@
-// import {
-//   Dispatch,
-//   ReactNode,
-//   SetStateAction,
-//   createContext,
-//   useContext,
-//   useState,
-// } from "react";
-// import { Feedback } from "./types";
+"use client";
+import {
+  Dispatch,
+  ReactNode,
+  SetStateAction,
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
+import { Feedback, User } from "./types";
 
-// interface feedbackContextProps {
-//   setfeedback: Dispatch<SetStateAction<Feedback[]>>;
-//   feedback: Feedback[];
-// }
+interface feedbackContextProps {
+  setdashboardfeedback: Dispatch<SetStateAction<Feedback[]>>;
+  dashboardfeedback: Feedback[];
+  user?: User;
+  setuser: Dispatch<SetStateAction<User | undefined>>;
+}
 
-// const feedbackContext = createContext<feedbackContextProps | undefined>(
-//   undefined
-// );
-// interface Props {
-//   children: ReactNode;
-// }
+const feedbackContext = createContext<feedbackContextProps | undefined>(
+  undefined
+);
+interface Props {
+  children: ReactNode;
+}
 
-// const ContextProvider = ({ children }: Props) => {
-//   const [feedback, setfeedback] = useState<Feedback[]>([]);
+const ContextProvider = ({ children }: Props) => {
+  const [dashboardfeedback, setdashboardfeedback] = useState<Feedback[]>([]);
+  const [user, setuser] = useState<User | undefined>(undefined);
 
-//   const feedbackValues = {
-//     feedback,
-//     setfeedback,
-//   };
+  const feedbackValues: feedbackContextProps = {
+    dashboardfeedback,
+    setdashboardfeedback,
+    user,
+    setuser,
+  };
 
-//   return (
-//     <feedbackContext.Provider value={feedbackValues}>
-//       {children}
-//     </feedbackContext.Provider>
-//   );
-// };
+  return (
+    <feedbackContext.Provider value={feedbackValues}>
+      {children}
+    </feedbackContext.Provider>
+  );
+};
 
-// export const useFeeddbackState = (): feedbackContextProps => {
-//   const context = useContext(feedbackContext);
-//   if (!context) {
-//     throw new Error("usefeedbackstate must be within the provider");
-//   }
-//   return context;
-// };
+export const useFeeddbackState = (): feedbackContextProps => {
+  const context = useContext(feedbackContext);
+  if (!context) {
+    throw new Error("usefeedbackstate must be within the provider");
+  }
+  return context;
+};
 
-// export default ContextProvider;
+export default ContextProvider;

@@ -1,12 +1,14 @@
 import { handleAuthErrors } from "@/helperfunctions/helperfunctions";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 
 const Login = () => {
   const [password, setpassword] = useState("");
   const [email, setemail] = useState("");
-
   const [showPassword, setshowPassword] = useState(false);
+
+  const router = useRouter();
 
   const showpwrd = (ev: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     ev.preventDefault();
@@ -21,7 +23,7 @@ const Login = () => {
   const logintoaccount = async (ev: React.FormEvent<HTMLFormElement>) => {
     ev.preventDefault();
     if (!email || !password) {
-      return alert("Give all provided details");
+      return toast.error("Give all provided details");
     }
     try {
       const resp = await fetch(`../api/user/login`, {
@@ -40,8 +42,12 @@ const Login = () => {
       }
 
       if (data.status === 200) {
-        console.log(data.user);
         toast.success("Login Succesful ");
+        // console.log(data.others);
+        localStorage.setItem("user", JSON.stringify(data.others));
+        setTimeout(() => {
+          router.push("/dashboard");
+        }, 3000);
       }
     } catch (error) {
       console.log(error);

@@ -5,6 +5,7 @@ import Login from "../components/Login";
 
 const Auth = () => {
   const [isLogin, setisLogin] = useState(true);
+
   return (
     <main className="min-h-screen flex md:justify-center items-center flex-col ">
       <div className=" mt-5 shadow-md flex  md:w-96 w-11/12 justify-evenly rounded  ">

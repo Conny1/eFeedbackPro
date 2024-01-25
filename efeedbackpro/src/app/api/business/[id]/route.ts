@@ -17,7 +17,7 @@ export async function GET(
     const respData = await Business.find({ userid: id });
     if (respData.length === 0)
       return NextResponse.json({ message: "Not found", status: 404 });
-    return NextResponse.json(respData);
+    return NextResponse.json({ status: 200, respData });
   } catch (error) {
     // console.log(error);
     return NextResponse.json({ message: "Server error", status: 500 });
