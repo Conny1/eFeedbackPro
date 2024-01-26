@@ -5,10 +5,11 @@ import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import Header from "./dashboardcomponents/Header";
 import { useFeeddbackState } from "@/state/state";
+import { handleFeedbackErrors } from "@/helperfunctions/helperfunctions";
 
 const dashboard = () => {
   const router = useRouter();
-  const { user, setuser } = useFeeddbackState();
+  const { user, setuser, dashboardfeedback } = useFeeddbackState();
 
   useEffect(() => {
     const user = localStorage.getItem("user");
@@ -24,10 +25,11 @@ const dashboard = () => {
       <Header />
 
       <section className=" mt-4  flex justify-evenly h-12 gap-1 flex-wrap ">
-        <Feedback />
-        <Feedback />
-        <Feedback />
-        <Feedback />
+        {dashboardfeedback.length > 0
+          ? dashboardfeedback.map((item) => {
+              return <Feedback key={item._id} {...item} />;
+            })
+          : "No feed back collected yet"}
       </section>
     </main>
   );

@@ -3,7 +3,7 @@ import { FaWindowClose } from "react-icons/fa";
 import { FaCaretUp } from "react-icons/fa";
 import Comment from "./Comments";
 import { Comments } from "@/state/types";
-import { toast } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import {
   handleCommentsErrors,
   handleFeedbackErrors,
@@ -50,12 +50,15 @@ const FeedbackItemModal = ({
 
   // fetchComments
   useEffect(() => {
-    const fetchFeedback = async () => {
+    const fetchFeedbackComments = async () => {
       const id = _id;
       try {
         const data = await fetch(`./api/comments/${id}`);
         const resp = await data.json();
-        handleCommentsErrors(resp.status);
+        const message = handleCommentsErrors(resp.status);
+        if (message) {
+          return toast.error(message);
+        }
         if (resp.commentresp) {
           setcomments(resp.commentresp);
         }
@@ -64,7 +67,7 @@ const FeedbackItemModal = ({
       }
     };
 
-    fetchFeedback();
+    fetchFeedbackComments();
   }, [_id]);
 
   // addcomment
@@ -88,12 +91,14 @@ const FeedbackItemModal = ({
         }
         setinputcommnet("");
       } else {
-        handleCommentsErrors(data.status);
+        const message = handleCommentsErrors(data.status);
+        return toast.error(message);
       }
     } catch (error) {}
   };
   return (
     <div className=" flex justify-center md:items-center absolute top-0 left-0 bg-black   w-full h-full bg-opacity-80 ">
+      <Toaster />
       <div className=" relative rounded p-5  w-11/12 max-w-screen-md bg-white flex flex-col  items-center  ">
         <FaWindowClose
           onClick={() => {

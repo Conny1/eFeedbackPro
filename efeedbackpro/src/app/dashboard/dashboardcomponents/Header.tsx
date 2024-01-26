@@ -4,11 +4,13 @@ import { useRouter } from "next/navigation";
 import ProductName from "./ProductName";
 import { handleBusinessErrors } from "@/helperfunctions/helperfunctions";
 import { Business } from "@/state/types";
+import AddProduct from "./AddProduct";
 import { useFeeddbackState } from "@/state/state";
 
 const Header = () => {
   const { user } = useFeeddbackState();
   const [product, setproduct] = useState<Business[]>([]);
+  const [addproductmodal, setaddproductmodal] = useState(false);
   const router = useRouter();
   const logout = async (
     ev: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -78,10 +80,9 @@ const Header = () => {
             src="https://images.unsplash.com/photo-1614027164847-1b28cfe1df60?q=80&w=1386&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
             alt=""
           />
-          <p className="text-slate-700 font-bold text-xs ">
-            {" "}
-            joelconrad@gmail.com
-          </p>
+          {user && (
+            <p className="text-slate-700 font-bold text-xs ">{user?.email}</p>
+          )}
           <button onClick={logout} className="text-slate-700 text-l  ">
             Log Out
           </button>
@@ -94,8 +95,21 @@ const Header = () => {
             return <ProductName key={item._id} {...item} />;
           })}
         <div className=" flex items-center justify-center  bg-slate-200 flex-1">
-          <button className="text-slate-700 text-l  "> Add Product +</button>
+          <button
+            onClick={() => setaddproductmodal(true)}
+            className="text-slate-700 text-l  "
+          >
+            {" "}
+            Add Product +
+          </button>
         </div>
+        {/* add new feedback modal */}
+        {addproductmodal && (
+          <AddProduct
+            setproduct={setproduct}
+            setaddproductmodal={setaddproductmodal}
+          />
+        )}
       </section>
     </main>
   );

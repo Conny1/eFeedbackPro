@@ -38,7 +38,7 @@ export type Feedback = {
   user: User;
   comments: Comments[];
   votes: number;
-  isPublic: Boolean;
+  isPublic: boolean;
   uploads: string[];
   client: Client;
   business: Business;

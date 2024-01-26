@@ -3,8 +3,17 @@ import React, { useState } from "react";
 import { FaCaretUp } from "react-icons/fa";
 import FeedbackModal from "./FeedbackModal";
 
-const Feedback = () => {
+type Props = {
+  title: string;
+  description: string;
+  votes: number;
+  _id: string;
+  isPublic: boolean;
+};
+
+const Feedback = ({ title, description, votes, _id, isPublic }: Props) => {
   const [feebackModal, setfeebackModal] = useState(false);
+  const data = { title, description, votes, _id, isPublic };
 
   return (
     <>
@@ -13,19 +22,16 @@ const Feedback = () => {
         onClick={() => setfeebackModal(true)}
       >
         <div className="flex justify-between items-center h-8 mt-4 mb-4    ">
-          <p className="font-bold">Feedback Title</p>
+          <p className="font-bold">{title}</p>
           <button className="text-md flex gap-1 justify-center items-center shadow  rounded outline outline-1 outline-slate-400 p-0.5">
-            <FaCaretUp className="text-3xl" /> 80
+            <FaCaretUp className="text-3xl" /> {votes}
           </button>
         </div>
-        <p className="text-sm">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum
-          necessitatibus sed hic libero recusandae! Ipsum deserunt consequuntur
-          id inventore praesentium eius, cupiditate voluptates, vitae et sequi
-          delectus corporis recusandae optio...
-        </p>
+        <p className="text-sm">{description}</p>
       </div>
-      {feebackModal && <FeedbackModal setfeebackModal={setfeebackModal} />}
+      {feebackModal && (
+        <FeedbackModal setfeebackModal={setfeebackModal} {...data} />
+      )}
     </>
   );
 };

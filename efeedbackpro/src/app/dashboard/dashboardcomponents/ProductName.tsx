@@ -1,4 +1,7 @@
-import React from "react";
+import FeedbackLink from "@/app/components/FeedbackLink";
+import { handleFeedbackErrors } from "@/helperfunctions/helperfunctions";
+import { useFeeddbackState } from "@/state/state";
+import React, { useState } from "react";
 
 type Props = {
   name: string;
@@ -6,9 +9,32 @@ type Props = {
 };
 
 const ProductName = ({ name, _id }: Props) => {
+  const { setdashboardfeedback } = useFeeddbackState();
+  const [link, setlink] = useState(false);
+
+  const fetchFeedback = async () => {
+    const id = _id;
+    setdashboardfeedback([]);
+    try {
+      const data = await fetch(`./api/feedback/${id}`);
+      const resp = await data.json();
+      handleFeedbackErrors(resp.status);
+      if (resp.data) {
+        setdashboardfeedback(resp.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
-    <div className=" flex items-center justify-center bg-slate-200 flex-1">
-      <button className="text-slate-700 text-l  ">{name}</button>
+    <div className=" flex items-center justify-center bg-slate-200 flex-1 flex-col-reverse ">
+      <button onClick={fetchFeedback} className="text-slate-700 text-l  ">
+        {name}
+      </button>
+      <button onClick={() => setlink(true)} className="text-slate-700 text-l  ">
+        Feedback link
+      </button>
+      {link && <FeedbackLink _id={_id} setlink={setlink} />}
     </div>
   );
 };
