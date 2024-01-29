@@ -1,7 +1,7 @@
 import FeedbackLink from "@/app/components/FeedbackLink";
 import { handleFeedbackErrors } from "@/helperfunctions/helperfunctions";
 import { useFeeddbackState } from "@/state/state";
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 type Props = {
   name: string;
@@ -9,7 +9,8 @@ type Props = {
 };
 
 const ProductName = ({ name, _id }: Props) => {
-  const { setdashboardfeedback } = useFeeddbackState();
+  const { setdashboardfeedback, dashboardfeedback, refetchFeeddback } =
+    useFeeddbackState();
   const [link, setlink] = useState(false);
 
   const fetchFeedback = async () => {
@@ -26,6 +27,11 @@ const ProductName = ({ name, _id }: Props) => {
       console.log(error);
     }
   };
+  useEffect(() => {
+    if (dashboardfeedback.length > 0) {
+      fetchFeedback();
+    }
+  }, [refetchFeeddback]);
   return (
     <div className=" flex items-center justify-center bg-slate-200 flex-1 flex-col-reverse ">
       <button onClick={fetchFeedback} className="text-slate-700 text-l  ">

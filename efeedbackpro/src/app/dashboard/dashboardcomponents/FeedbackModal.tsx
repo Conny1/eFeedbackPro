@@ -1,10 +1,10 @@
-import { handleCommentsErrors } from "@/helperfunctions/helperfunctions";
 import { Comments } from "@/state/types";
 import React, { useState, useEffect } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { FaWindowClose } from "react-icons/fa";
 import { FaCaretUp } from "react-icons/fa";
 import Comment from "@/app/components/Comments";
+import { useFeeddbackState } from "@/state/state";
 
 type Props = {
   setfeebackModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -13,6 +13,8 @@ type Props = {
   votes: number;
   _id: string;
   isPublic: boolean;
+  comments: [string];
+  business: string;
 };
 const FeedbackModal = ({
   setfeebackModal,
@@ -21,8 +23,11 @@ const FeedbackModal = ({
   votes,
   _id,
   isPublic,
+  comments: commentids,
+  business,
 }: Props) => {
   const [comments, setcomments] = useState<Comments[]>([]);
+  const { setrefetchFeeddback } = useFeeddbackState();
 
   useEffect(() => {
     const fetchFeedbackComments = async () => {
@@ -41,6 +46,31 @@ const FeedbackModal = ({
 
     fetchFeedbackComments();
   }, []);
+
+  const deleteFeedback = async () => {
+    setrefetchFeeddback(false);
+    const bodyData = {
+      feedbackid: _id,
+      comments: commentids,
+      businessid: business,
+    };
+    try {
+      const data = await fetch(`./api/feedback/`, {
+        method: "DELETE",
+        headers: {
+          content_Type: "Application/json",
+        },
+        body: JSON.stringify(bodyData),
+      });
+      const resp = await data.json();
+      setrefetchFeeddback(true);
+      if (resp.status == 200) {
+        setfeebackModal(false);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div className=" flex justify-center md:items-center absolute top-0 left-0 bg-black   w-full h-full bg-opacity-80 ">
       <Toaster />
@@ -65,7 +95,10 @@ const FeedbackModal = ({
           <button className=" flex text-sm justify-center items-center bg-green-400 text-white p-1 rounded ">
             make Public
           </button>
-          <button className=" flex text-sm justify-center items-center bg-red-400 text-white p-1 rounded ">
+          <button
+            onClick={deleteFeedback}
+            className=" flex text-sm justify-center items-center bg-red-400 text-white p-1 rounded "
+          >
             Delete
           </button>
         </div>

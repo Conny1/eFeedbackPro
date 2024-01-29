@@ -11,6 +11,8 @@ export async function GET(
   { params }: { params: { businessid: string } }
 ) {
   const id = params.businessid;
+  if (id.length < 24 || id.length > 24)
+    return NextResponse.json({ message: "Not found", status: 404 });
 
   try {
     const data = await Feedback.find({ business: id });
@@ -22,6 +24,7 @@ export async function GET(
     return NextResponse.json({ status: 200, data });
   } catch (error) {
     console.log(error);
+
     return NextResponse.json({ status: 500, message: "server error" });
   }
 }

@@ -3,6 +3,7 @@ import Business from "@/models/BusinessModel";
 import { connectToDb } from "@/dbconfig/dbconfig";
 import Client from "@/models/ClientModel";
 import Feedback from "@/models/FeedbackModel";
+import Comment from "@/models/CommentModel";
 
 connectToDb();
 // @description give a feedback
@@ -69,5 +70,35 @@ export async function PUT(request: NextResponse) {
     });
   } catch (error) {
     NextResponse.json({ message: "Server error", status: 500 });
+  }
+}
+
+// @descrition Delete a feedback
+// @route   /api/feedback -DELETE
+export async function DELETE(request: NextResponse) {
+  try {
+    const { feedbackid, comments, businessid } = await request.json();
+
+    // delete feedback first
+    await Feedback.findByIdAndDelete(feedbackid);
+
+    // delete [comments] related to the fedback
+    if (comments) {
+      if (comments.length > 0) {
+        await Promise.all(
+          comments.map(async (id: string) => {
+            return await Comment.findByIdAndDelete(id);
+          })
+        );
+      }
+    }
+
+    return NextResponse.json({
+      status: 200,
+      message: "Deleted",
+    });
+  } catch (error) {
+    console.log(error);
+    return NextResponse.json({ message: "Server error", status: 500 });
   }
 }

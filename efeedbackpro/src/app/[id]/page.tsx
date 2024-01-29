@@ -5,13 +5,17 @@ import Feedbackitem from "../components/Feedbackitem";
 import { Feedback } from "../../state/types";
 import { handleFeedbackErrors } from "@/helperfunctions/helperfunctions";
 
-function SubmitFeedback() {
+type Props = {
+  params: { id: string };
+};
+
+function SubmitFeedback({ params }: Props) {
   const [feebackFormModal, setfeebackFormModal] = useState(false);
   const [feedback, setfeedback] = useState<Feedback[]>([]);
 
   useEffect(() => {
     const fetchFeedback = async () => {
-      const id = "65a795adda605819ef4243fc";
+      const id = params.id;
       try {
         const data = await fetch(`./api/feedback/${id}`);
         const resp = await data.json();

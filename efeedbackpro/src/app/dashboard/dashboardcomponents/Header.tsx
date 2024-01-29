@@ -64,7 +64,7 @@ const Header = () => {
           </button>
         </div>
 
-        <div className=" flex items-center justify-center  bg-gradient-to-r from-cyan-400 to-blue-400 flex-1">
+        {/* <div className=" flex items-center justify-center  bg-gradient-to-r from-cyan-400 to-blue-400 flex-1">
           <button className="text-slate-700 text-xl font-bold ">
             New Features
           </button>
@@ -72,7 +72,7 @@ const Header = () => {
 
         <div className=" flex items-center justify-center  bg-gradient-to-r from-cyan-400 to-blue-400 flex-1">
           <button className="text-slate-700 text-xl font-bold ">Bugs</button>
-        </div>
+        </div> */}
         {/* auth details */}
         <div className=" flex items-center justify-center  flex-1 max-w-xs flex-col  ">
           <img

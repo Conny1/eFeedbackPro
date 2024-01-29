@@ -18,7 +18,7 @@ const Feedback = ({ title, description, votes, _id, isPublic }: Props) => {
   return (
     <>
       <div
-        className="max-w-96 outline outline-slate-200 outline-1 shadow p-5 rounded cursor-pointer "
+        className="  max-w-96 outline outline-slate-200 outline-1 shadow p-5 rounded cursor-pointer "
         onClick={() => setfeebackModal(true)}
       >
         <div className="flex justify-between items-center h-8 mt-4 mb-4    ">
