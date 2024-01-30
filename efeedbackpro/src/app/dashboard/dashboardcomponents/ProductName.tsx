@@ -1,14 +1,15 @@
 import FeedbackLink from "@/app/components/FeedbackLink";
 import { handleFeedbackErrors } from "@/helperfunctions/helperfunctions";
 import { useFeeddbackState } from "@/state/state";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 type Props = {
   name: string;
   _id: string;
+  setselectedProduct: React.Dispatch<React.SetStateAction<string>>;
 };
 
-const ProductName = ({ name, _id }: Props) => {
+const ProductName = ({ name, _id, setselectedProduct }: Props) => {
   const { setdashboardfeedback, dashboardfeedback, refetchFeeddback } =
     useFeeddbackState();
   const [link, setlink] = useState(false);
@@ -16,12 +17,14 @@ const ProductName = ({ name, _id }: Props) => {
   const fetchFeedback = async () => {
     const id = _id;
     setdashboardfeedback([]);
+    setselectedProduct("");
     try {
       const data = await fetch(`./api/feedback/${id}`);
       const resp = await data.json();
       handleFeedbackErrors(resp.status);
       if (resp.data) {
         setdashboardfeedback(resp.data);
+        setselectedProduct(name);
       }
     } catch (error) {
       console.log(error);
@@ -33,11 +36,17 @@ const ProductName = ({ name, _id }: Props) => {
     }
   }, [refetchFeeddback]);
   return (
-    <div className=" flex items-center justify-center bg-slate-200 flex-1 flex-col-reverse ">
-      <button onClick={fetchFeedback} className="text-slate-700 text-l  ">
+    <div className="  flex gap-3  w-full   h-16 ">
+      <button
+        onClick={fetchFeedback}
+        className=" bg-slate-200 text-slate-700 text-l flex-1 rounded "
+      >
         {name}
       </button>
-      <button onClick={() => setlink(true)} className="text-slate-700 text-l  ">
+      <button
+        onClick={() => setlink(true)}
+        className="bg-slate-200 text-slate-700 text-l flex-1 rounded "
+      >
         Feedback link
       </button>
       {link && <FeedbackLink _id={_id} setlink={setlink} />}

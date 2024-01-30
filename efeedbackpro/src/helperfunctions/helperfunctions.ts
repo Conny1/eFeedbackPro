@@ -1,3 +1,5 @@
+import { Feedback } from "@/state/types";
+
 export const handleAuthErrors = (status: number) => {
   let message = "";
   switch (status) {
@@ -68,4 +70,14 @@ export const handleBusinessErrors = (status: number) => {
   }
 
   return message;
+};
+
+// filters fro most voted feedback
+export const mostVoted = (feedback: Feedback[]) => {
+  if (!feedback) return [];
+  return new Promise((resolve, reject) => {
+    const data = feedback.sort((a, b) => b.votes - a.votes);
+
+    resolve(data);
+  });
 };

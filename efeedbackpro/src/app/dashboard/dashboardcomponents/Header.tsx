@@ -1,16 +1,21 @@
 import React, { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/navigation";
-import ProductName from "./ProductName";
-import { handleBusinessErrors } from "@/helperfunctions/helperfunctions";
-import { Business } from "@/state/types";
+import {
+  handleBusinessErrors,
+  mostVoted,
+} from "@/helperfunctions/helperfunctions";
+import { Business, Feedback } from "@/state/types";
 import AddProduct from "./AddProduct";
 import { useFeeddbackState } from "@/state/state";
+import ProductModal from "./ProductModal";
 
 const Header = () => {
-  const { user } = useFeeddbackState();
+  const { user, dashboardfeedback, setdashboardfeedback } = useFeeddbackState();
   const [product, setproduct] = useState<Business[]>([]);
   const [addproductmodal, setaddproductmodal] = useState(false);
+  const [moreProducts, setmoreProducts] = useState(false);
+  const [selectedProduct, setselectedProduct] = useState("");
   const router = useRouter();
   const logout = async (
     ev: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -54,13 +59,14 @@ const Header = () => {
     };
     fetchProduct();
   }, []);
+
   return (
     <main>
       <Toaster />
       <section className=" flex justify-evenly h-20 gap-1 ">
         <div className=" flex items-center justify-center  bg-gradient-to-r from-cyan-400 to-blue-400 flex-1">
           <button className="text-slate-700 text-xl font-bold ">
-            Feedback
+            Feedback{selectedProduct && `   for ${selectedProduct}`}
           </button>
         </div>
 
@@ -90,16 +96,45 @@ const Header = () => {
       </section>
 
       <section className="  flex justify-evenly h-12 gap-1 ">
-        {product.length > 0 &&
-          product.map((item) => {
-            return <ProductName key={item._id} {...item} />;
-          })}
+        {/*  product list */}
+        <div className=" flex items-center justify-center  bg-slate-200 flex-1 max-w-40">
+          <button
+            onClick={() => setmoreProducts(true)}
+            className="text-slate-700 text-l  "
+          >
+            Products
+          </button>
+        </div>
+
+        {moreProducts && (
+          <ProductModal
+            product={product}
+            setselectedProduct={setselectedProduct}
+            setmoreProducts={setmoreProducts}
+          />
+        )}
+        {/* filters */}
+
+        <div className=" flex items-center justify-center  bg-slate-200 flex-1 max-w-40">
+          <button
+            onClick={async () => {
+              const resp = await mostVoted(dashboardfeedback);
+              if (resp) {
+                const data = resp as Feedback[];
+                console.log(data);
+                setdashboardfeedback(data);
+              }
+            }}
+            className="text-slate-700 text-l  "
+          >
+            Most Voted
+          </button>
+        </div>
         <div className=" flex items-center justify-center  bg-slate-200 flex-1">
           <button
             onClick={() => setaddproductmodal(true)}
             className="text-slate-700 text-l  "
           >
-            {" "}
             Add Product +
           </button>
         </div>

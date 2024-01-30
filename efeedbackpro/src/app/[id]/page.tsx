@@ -17,7 +17,7 @@ function SubmitFeedback({ params }: Props) {
     const fetchFeedback = async () => {
       const id = params.id;
       try {
-        const data = await fetch(`./api/feedback/${id}`);
+        const data = await fetch(`./api/feedback/${id}?query=true`);
         const resp = await data.json();
         handleFeedbackErrors(resp.status);
         if (resp.data) {

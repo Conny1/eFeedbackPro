@@ -27,7 +27,9 @@ const FeedbackModal = ({
   business,
 }: Props) => {
   const [comments, setcomments] = useState<Comments[]>([]);
-  const { setrefetchFeeddback } = useFeeddbackState();
+  const { setrefetchFeeddback, dashboardfeedback, setdashboardfeedback } =
+    useFeeddbackState();
+  const [publicfeedback, setpublic] = useState(isPublic);
 
   useEffect(() => {
     const fetchFeedbackComments = async () => {
@@ -71,6 +73,34 @@ const FeedbackModal = ({
       console.log(error);
     }
   };
+
+  const makePublicOrPrivate = async () => {
+    const bodyData = {
+      isPublic: publicfeedback,
+    };
+    const id = _id;
+    try {
+      const data = await fetch(`./api/feedback/${id}`, {
+        method: "PUT",
+        headers: {
+          content_Type: "Application/json",
+        },
+        body: JSON.stringify(bodyData),
+      });
+      const resp = await data.json();
+
+      if (resp.status == 200) {
+        setpublic(resp.data.isPublic);
+        const updatedfeddback = dashboardfeedback.filter(
+          (item) => item._id !== _id
+        );
+        setdashboardfeedback([...updatedfeddback, resp.data]);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className=" flex justify-center md:items-center absolute top-0 left-0 bg-black   w-full h-full bg-opacity-80 ">
       <Toaster />
@@ -80,7 +110,7 @@ const FeedbackModal = ({
           className="absolute left-4 text-lg"
         />
 
-        {!isPublic && (
+        {!publicfeedback && (
           <p className=" w-5/6  text-green-700 italic  ">Private to you </p>
         )}
 
@@ -92,8 +122,11 @@ const FeedbackModal = ({
           <button className=" flex text-sm justify-center items-center bg-blue-400 text-white p-1 rounded ">
             <FaCaretUp className="text-lg" /> Upvotes {votes}
           </button>
-          <button className=" flex text-sm justify-center items-center bg-green-400 text-white p-1 rounded ">
-            make Public
+          <button
+            onClick={makePublicOrPrivate}
+            className=" flex text-sm justify-center items-center bg-green-400 text-white p-1 rounded "
+          >
+            {publicfeedback ? `Disable Voting` : "Enable Voting"}
           </button>
           <button
             onClick={deleteFeedback}
