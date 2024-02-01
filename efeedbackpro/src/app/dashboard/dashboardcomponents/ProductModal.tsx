@@ -20,6 +20,7 @@ const ProductModal = ({
       </>
     );
   }
+
   return (
     <div className=" flex justify-center md:items-center absolute bg-black   w-full h-full bg-opacity-80 ">
       <div className=" relative rounded p-5 gap-3 w-11/12 max-w-screen-md bg-white flex flex-col  items-center  ">

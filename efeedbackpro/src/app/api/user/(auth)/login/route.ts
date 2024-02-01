@@ -25,9 +25,11 @@ export async function POST(request: NextRequest) {
         message: "incorrect email or password",
       });
 
+    const secret = process.env.SECRET_KEY as string;
+
     const authtoken = jwt.sign(
       { id: user._id, isadmin: reqbody.isadmin },
-      "key"
+      secret
     );
     const { password, ...others } = user._doc;
     const response = NextResponse.json({ status: 200, others });

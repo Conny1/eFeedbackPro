@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import Business from "@/models/BusinessModel";
 import { connectToDb } from "@/dbconfig/dbconfig";
+import { verifyToken } from "@/helperfunctions/helperfunctions";
 
 connectToDb();
 
@@ -8,9 +9,13 @@ connectToDb();
 // @route    /api/business/:id - GET
 
 export async function GET(
-  _: undefined,
+  request: NextRequest,
   { params }: { params: { id: string } }
 ) {
+  const token = request.cookies.get("token")?.value;
+  const isAuthenticated = verifyToken(token);
+  if (!isAuthenticated)
+    return NextResponse.json({ status: 401, message: "unauthorised" });
   try {
     const id = params.id;
 

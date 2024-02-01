@@ -1,4 +1,6 @@
 import { connectToDb } from "@/dbconfig/dbconfig";
+import { verifyToken } from "@/helperfunctions/helperfunctions";
+import Business from "@/models/BusinessModel";
 import Feedback from "@/models/FeedbackModel";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -16,25 +18,37 @@ export async function GET(
   const searchParams = request.nextUrl.searchParams;
   const query = searchParams.get("query");
 
-  // console.log(query);
   if (query) {
     try {
+      const business = await Business.findById(id);
+      if (!business) {
+        return NextResponse.json({ message: "Not found", status: 404 });
+      }
+
       const data = await Feedback.find({
         business: id,
         isPublic: query,
       });
 
       if (data.length === 0) {
-        return NextResponse.json({ message: "Not found", status: 404 });
+        return NextResponse.json({
+          message: "Not found",
+          status: 404,
+          business,
+        });
       }
 
-      return NextResponse.json({ status: 200, data });
+      return NextResponse.json({ status: 200, data, business });
     } catch (error) {
       console.log(error);
 
       return NextResponse.json({ status: 500, message: "server error" });
     }
   } else {
+    const token = request.cookies.get("token")?.value;
+    const isAuthenticated = verifyToken(token);
+    if (!isAuthenticated)
+      return NextResponse.json({ status: 401, message: "unauthorised" });
     try {
       const data = await Feedback.find({
         business: id,
@@ -59,6 +73,10 @@ export async function PUT(
   request: NextResponse,
   { params }: { params: { businessid: string } }
 ) {
+  const token = request.cookies.get("token")?.value;
+  const isAuthenticated = verifyToken(token);
+  if (!isAuthenticated)
+    return NextResponse.json({ status: 401, message: "unauthorised" });
   const feedbackid = params.businessid;
   try {
     const { isPublic } = await request.json();

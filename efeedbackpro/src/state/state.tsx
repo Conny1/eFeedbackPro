@@ -17,6 +17,8 @@ interface feedbackContextProps {
   setuser: Dispatch<SetStateAction<User | undefined>>;
   setrefetchFeeddback: Dispatch<SetStateAction<boolean>>;
   refetchFeeddback: boolean;
+  setrefetch: Dispatch<SetStateAction<boolean>>;
+  refetch: boolean;
 }
 
 const feedbackContext = createContext<feedbackContextProps | undefined>(
@@ -30,6 +32,7 @@ const ContextProvider = ({ children }: Props) => {
   const [dashboardfeedback, setdashboardfeedback] = useState<Feedback[]>([]);
   const [user, setuser] = useState<User | undefined>(undefined);
   const [refetchFeeddback, setrefetchFeeddback] = useState(false);
+  const [refetch, setrefetch] = useState(false);
 
   const feedbackValues: feedbackContextProps = {
     dashboardfeedback,
@@ -38,6 +41,8 @@ const ContextProvider = ({ children }: Props) => {
     setuser,
     refetchFeeddback,
     setrefetchFeeddback,
+    refetch,
+    setrefetch,
   };
 
   return (

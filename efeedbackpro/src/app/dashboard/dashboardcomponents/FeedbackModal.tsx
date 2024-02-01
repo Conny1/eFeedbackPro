@@ -14,7 +14,6 @@ type Props = {
   _id: string;
   isPublic: boolean;
   comments: [string];
-  business: string;
 };
 const FeedbackModal = ({
   setfeebackModal,
@@ -24,7 +23,6 @@ const FeedbackModal = ({
   _id,
   isPublic,
   comments: commentids,
-  business,
 }: Props) => {
   const [comments, setcomments] = useState<Comments[]>([]);
   const { setrefetchFeeddback, dashboardfeedback, setdashboardfeedback } =
@@ -54,7 +52,6 @@ const FeedbackModal = ({
     const bodyData = {
       feedbackid: _id,
       comments: commentids,
-      businessid: business,
     };
     try {
       const data = await fetch(`./api/feedback/`, {

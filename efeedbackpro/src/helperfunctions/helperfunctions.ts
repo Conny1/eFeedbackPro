@@ -1,4 +1,5 @@
 import { Feedback } from "@/state/types";
+import jwt from "jsonwebtoken";
 
 export const handleAuthErrors = (status: number) => {
   let message = "";
@@ -24,14 +25,20 @@ export const handleAuthErrors = (status: number) => {
 export const handleFeedbackErrors = (status: number) => {
   let message = "";
   switch (status) {
+    case 401:
+      message = "All details not captured";
+      break;
+
+    case 403:
+      message = "invalid request";
+      break;
+
     case 404:
       message = "No feedback yet";
-
       break;
 
     case 500:
       message = "Server Error";
-
       break;
   }
 
@@ -80,4 +87,18 @@ export const mostVoted = (feedback: Feedback[]) => {
 
     resolve(data);
   });
+};
+
+// verify jwt tokens
+export const verifyToken = (token?: string) => {
+  if (!token) return false;
+  const secret = process.env.SECRET_KEY as string;
+  let bol = false;
+  jwt.verify(token, secret, (err, user) => {
+    if (err) return (bol = false);
+
+    bol = true;
+  });
+
+  return bol;
 };

@@ -36,7 +36,7 @@ export type Feedback = {
   title: string;
   description: string;
   user: User;
-  comments: Comments[];
+  comments: [string];
   votes: number;
   isPublic: boolean;
   uploads: string[];

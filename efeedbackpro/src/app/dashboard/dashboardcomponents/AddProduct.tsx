@@ -75,7 +75,7 @@ const AddProduct = ({ setproduct, setaddproductmodal }: Props) => {
         </div>
         <div className=" mt-4 w-5/6 flex justify-end flex-col md:flex-row ">
           <button className="bg-blue-400 p-1 text-white rounded ">
-            Create Post
+            Create Product
           </button>
         </div>
       </form>

@@ -19,7 +19,7 @@ const dashboard = () => {
     <main>
       <Header />
 
-      <section className=" mt-4  flex justify-evenly h-12 gap-4 flex-wrap ">
+      <section className=" mt-4  flex justify-evenly h-12 gap-4 flex-wrap  ">
         {dashboardfeedback.length > 0
           ? dashboardfeedback.map((item) => {
               return <Feedback key={item._id} {...item} />;

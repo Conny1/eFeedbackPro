@@ -11,7 +11,8 @@ import { useFeeddbackState } from "@/state/state";
 import ProductModal from "./ProductModal";
 
 const Header = () => {
-  const { user, dashboardfeedback, setdashboardfeedback } = useFeeddbackState();
+  const { user, dashboardfeedback, setdashboardfeedback, refetch } =
+    useFeeddbackState();
   const [product, setproduct] = useState<Business[]>([]);
   const [addproductmodal, setaddproductmodal] = useState(false);
   const [moreProducts, setmoreProducts] = useState(false);
@@ -58,7 +59,7 @@ const Header = () => {
       }
     };
     fetchProduct();
-  }, []);
+  }, [refetch]);
 
   return (
     <main>

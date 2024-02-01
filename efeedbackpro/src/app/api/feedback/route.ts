@@ -4,6 +4,7 @@ import { connectToDb } from "@/dbconfig/dbconfig";
 import Client from "@/models/ClientModel";
 import Feedback from "@/models/FeedbackModel";
 import Comment from "@/models/CommentModel";
+import { verifyToken } from "@/helperfunctions/helperfunctions";
 
 connectToDb();
 // @description give a feedback
@@ -12,20 +13,21 @@ export async function POST(request: NextRequest) {
   const reqbody = await request.json();
 
   try {
+    // take userid from business and confirm if the business exist
+    const businessData = await Business.findById(reqbody.businessid);
+    // console.log(businessData);
+    if (!businessData)
+      return NextResponse.json({
+        status: 403,
+        message: "invalid request",
+      });
+
     //   request to add client to db
     const clientDetails = await Client.create({ email: reqbody.email });
     if (!clientDetails)
       return NextResponse.json({
         status: 401,
         message: "Client details not captured",
-      });
-
-    // take userid from business
-    const businessData = await Business.findById(reqbody.businessid);
-    if (!businessData)
-      return NextResponse.json({
-        status: 404,
-        message: "Not found",
       });
 
     //   add the business to db
@@ -76,8 +78,12 @@ export async function PUT(request: NextResponse) {
 // @descrition Delete a feedback
 // @route   /api/feedback -DELETE
 export async function DELETE(request: NextResponse) {
+  const token = request.cookies.get("token")?.value;
+  const isAuthenticated = verifyToken(token);
+  if (!isAuthenticated)
+    return NextResponse.json({ status: 401, message: "unauthorised" });
   try {
-    const { feedbackid, comments, businessid } = await request.json();
+    const { feedbackid, comments } = await request.json();
 
     // delete feedback first
     await Feedback.findByIdAndDelete(feedbackid);
