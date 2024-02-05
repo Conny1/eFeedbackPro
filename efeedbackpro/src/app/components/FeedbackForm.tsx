@@ -13,6 +13,10 @@ const FeedbackForm = ({ setfeebackFormModal, id }: Props) => {
   const [description, setdescription] = useState("");
   const [clientemail, setclientemail] = useState("");
   const [loading, setloading] = useState(false);
+  const [images, setimages] = useState<FileList | null>(null);
+  const [uploadUrl, setuploadUrl] = useState([]);
+
+  const UploadImage = () => {};
 
   const createPost = async (ev: React.FormEvent<HTMLFormElement>) => {
     ev.preventDefault();
@@ -111,7 +115,12 @@ const FeedbackForm = ({ setfeebackFormModal, id }: Props) => {
             </div>
           </div>
           <div className=" mt-4 w-5/6 flex justify-end flex-col md:flex-row ">
-            <input type="file" name="uploadfiles" />
+            <input
+              onChange={(ev) => setimages(ev.target.files)}
+              type="file"
+              name="uploadfiles"
+              accept="image/png, image/jpeg"
+            />
             <button className="bg-blue-400 p-1 text-white rounded ">
               Create Post
             </button>

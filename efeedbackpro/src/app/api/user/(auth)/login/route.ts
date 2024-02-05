@@ -41,3 +41,26 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ status: 500, message: "Server error" });
   }
 }
+
+export async function PUT(request: NextRequest) {
+  try {
+    const { userid, plan } = await request.json();
+    console.log(userid, plan);
+    const user = await User.findByIdAndUpdate(
+      userid,
+      { plan: plan },
+      { new: true }
+    );
+
+    if (!user)
+      return NextResponse.json({
+        status: 500,
+        message: "server error",
+      });
+
+    return NextResponse.json({ status: 200, message: "Subscribed", user });
+  } catch (error) {
+    console.log(error);
+    return NextResponse.json({ status: 500, message: "Server error" });
+  }
+}

@@ -5,6 +5,7 @@ export type User = {
   password: string;
   isadmin: Boolean;
   subToken: string;
+  plan: string;
 };
 
 export type Comments = {
@@ -21,6 +22,7 @@ export type Client = {
   email: string;
   feedback: Feedback;
   business: Business;
+  password: string;
 };
 
 export type Business = {
@@ -43,3 +45,8 @@ export type Feedback = {
   client: Client;
   business: Business;
 };
+
+export enum plans {
+  basic = "BASIC",
+  free = "FREE",
+}

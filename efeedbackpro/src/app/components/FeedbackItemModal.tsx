@@ -22,13 +22,25 @@ const FeedbackItemModal = ({
   votes,
   description,
   title,
-
   _id,
 }: Props) => {
   const [votesNumber, setvotesNumber] = useState(votes || 0);
   const [comments, setcomments] = useState<Comments[]>([]);
   const [inputcommnet, setinputcommnet] = useState("");
   const makeAvote = async () => {
+    const isVoted = localStorage.getItem("voteids");
+
+    let VotedIds: [string] = [""];
+    if (!isVoted) {
+      localStorage.setItem("voteids", JSON.stringify(VotedIds));
+    } else if (isVoted) {
+      VotedIds = JSON.parse(isVoted);
+
+      if (VotedIds.filter((item) => item === _id).length !== 0) {
+        return toast.error("You already Voted");
+      }
+    }
+
     try {
       const respdata = await fetch("./api/feedback", {
         method: "PUT",
@@ -41,7 +53,8 @@ const FeedbackItemModal = ({
 
       if (data.status === 200) {
         setvotesNumber(data.data);
-
+        VotedIds.push(_id);
+        localStorage.setItem("voteids", JSON.stringify(VotedIds));
         toast.success("voted");
       }
       handleFeedbackErrors(data.status);

@@ -3,15 +3,22 @@ import React, { useEffect } from "react";
 import Feedback from "./dashboardcomponents/Feedback";
 import Header from "./dashboardcomponents/Header";
 import { useFeeddbackState } from "@/state/state";
+import { useRouter } from "next/navigation";
 
 const dashboard = () => {
   const { setuser, dashboardfeedback } = useFeeddbackState();
-
+  const router = useRouter();
   useEffect(() => {
     const user = localStorage.getItem("user");
 
     if (user) {
       setuser(JSON.parse(user));
+      const userData = JSON.parse(user);
+      if ("plan" in userData) {
+        if (userData.plan === "") {
+          router.push("/dashboard/subscription");
+        }
+      }
     }
   }, []);
 

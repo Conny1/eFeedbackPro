@@ -44,6 +44,7 @@ const Login = () => {
       if (data.status === 200) {
         toast.success("Login Succesful ");
         // console.log(data.others);
+
         localStorage.setItem("user", JSON.stringify(data.others));
         setTimeout(() => {
           router.push("/dashboard");

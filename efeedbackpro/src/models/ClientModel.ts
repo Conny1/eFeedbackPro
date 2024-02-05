@@ -14,6 +14,7 @@ export const ClientSchema = new Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Business",
     },
+    password: String,
   },
   { timestamps: true }
 );

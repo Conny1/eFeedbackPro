@@ -15,6 +15,10 @@ export const userSchema = new Schema(
       required: [true, "Password is required"],
     },
     subToken: String,
+    plan: {
+      type: String,
+      default: "",
+    },
     isadmin: {
       type: Boolean,
       default: true,
