@@ -83,7 +83,7 @@ export async function DELETE(request: NextResponse) {
   if (!isAuthenticated)
     return NextResponse.json({ status: 401, message: "unauthorised" });
   try {
-    const { feedbackid, comments } = await request.json();
+    const { feedbackid, comments, business } = await request.json();
 
     // delete feedback first
     await Feedback.findByIdAndDelete(feedbackid);

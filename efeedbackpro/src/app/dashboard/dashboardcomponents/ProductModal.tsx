@@ -2,14 +2,17 @@ import React from "react";
 import { FaWindowClose } from "react-icons/fa";
 import { Business } from "@/state/types";
 import ProductName from "./ProductName";
+import Loading from "@/app/components/Loading";
 
 type Props = {
   product?: Business[];
+  productLoading: boolean;
   setmoreProducts: React.Dispatch<React.SetStateAction<boolean>>;
   setselectedProduct: React.Dispatch<React.SetStateAction<string>>;
 };
 const ProductModal = ({
   product,
+  productLoading,
   setmoreProducts,
   setselectedProduct,
 }: Props) => {
@@ -32,7 +35,9 @@ const ProductModal = ({
           Produc list
         </h3>
         <hr className=" w-full" />
-        {product.length > 0 &&
+        {productLoading ? (
+          <Loading />
+        ) : product.length > 0 ? (
           product.map((item) => {
             return (
               <ProductName
@@ -41,7 +46,10 @@ const ProductModal = ({
                 {...item}
               />
             );
-          })}
+          })
+        ) : (
+          <p>No product has been added yet</p>
+        )}
       </div>
     </div>
   );

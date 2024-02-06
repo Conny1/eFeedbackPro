@@ -8,9 +8,9 @@ type Props = {
 const Comments = ({ comment, createdAt }: Props) => {
   return (
     <div className="mb-4">
-      <p className="text-xs font-semibold text-slate-800 ">{comment}</p>
-      <p className="text-xs text-slate-500">
-        {new Date(createdAt).toDateString()}
+      <p className="text-sm font-semibold text-slate-800 ">{comment}</p>
+      <p className=" text-xs font-sans lowercase text-slate-500">
+        {` ${new Date(createdAt).toDateString()}`}
       </p>
     </div>
   );

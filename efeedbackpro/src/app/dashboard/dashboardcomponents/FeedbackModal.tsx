@@ -14,6 +14,7 @@ type Props = {
   _id: string;
   isPublic: boolean;
   comments: [string];
+  business: string;
 };
 const FeedbackModal = ({
   setfeebackModal,
@@ -23,6 +24,7 @@ const FeedbackModal = ({
   _id,
   isPublic,
   comments: commentids,
+  business,
 }: Props) => {
   const [comments, setcomments] = useState<Comments[]>([]);
   const { setrefetchFeeddback, dashboardfeedback, setdashboardfeedback } =
@@ -52,6 +54,7 @@ const FeedbackModal = ({
     const bodyData = {
       feedbackid: _id,
       comments: commentids,
+      business,
     };
     try {
       const data = await fetch(`./api/feedback/`, {
@@ -65,6 +68,10 @@ const FeedbackModal = ({
       setrefetchFeeddback(true);
       if (resp.status == 200) {
         setfeebackModal(false);
+        const updatedfeddback = dashboardfeedback.filter(
+          (item) => item._id !== _id
+        );
+        setdashboardfeedback(updatedfeddback);
       }
     } catch (error) {
       console.log(error);

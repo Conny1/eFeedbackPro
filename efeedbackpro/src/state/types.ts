@@ -43,7 +43,7 @@ export type Feedback = {
   isPublic: boolean;
   uploads: string[];
   client: Client;
-  business: Business;
+  business: string;
 };
 
 export enum plans {

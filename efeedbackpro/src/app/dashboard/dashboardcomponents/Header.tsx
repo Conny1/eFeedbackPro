@@ -14,6 +14,7 @@ const Header = () => {
   const { user, dashboardfeedback, setdashboardfeedback, refetch } =
     useFeeddbackState();
   const [product, setproduct] = useState<Business[]>([]);
+  const [productLoading, setproductLoading] = useState(false);
   const [addproductmodal, setaddproductmodal] = useState(false);
   const [moreProducts, setmoreProducts] = useState(false);
   const [selectedProduct, setselectedProduct] = useState("");
@@ -40,7 +41,7 @@ const Header = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       const user = localStorage.getItem("user");
-
+      setproductLoading(true);
       try {
         if (user) {
           const id = JSON.parse(user)._id;
@@ -50,9 +51,12 @@ const Header = () => {
           const data = await resp.json();
           if (data.status !== 200) {
             const message = handleBusinessErrors(data.status);
+            setproductLoading(false);
+            setproduct([]);
             return toast(message);
           }
           setproduct(data.respData);
+          setproductLoading(false);
         }
       } catch (error) {
         console.log(error);
@@ -109,6 +113,7 @@ const Header = () => {
 
         {moreProducts && (
           <ProductModal
+            productLoading={productLoading}
             product={product}
             setselectedProduct={setselectedProduct}
             setmoreProducts={setmoreProducts}
@@ -116,7 +121,7 @@ const Header = () => {
         )}
         {/* filters */}
 
-        <div className=" flex items-center justify-center  bg-slate-200 flex-1 max-w-40">
+        {/* <div className=" flex items-center justify-center  bg-slate-200 flex-1 max-w-40">
           <button
             onClick={async () => {
               const resp = await mostVoted(dashboardfeedback);
@@ -130,7 +135,7 @@ const Header = () => {
           >
             Most Voted
           </button>
-        </div>
+        </div> */}
         <div className=" flex items-center justify-center  bg-slate-200 flex-1">
           <button
             onClick={() => setaddproductmodal(true)}

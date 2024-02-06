@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import FeedbackForm from "../components/FeedbackForm";
 import Feedbackitem from "../components/Feedbackitem";
-import { Feedback } from "../../state/types";
+import { Business, Feedback } from "../../state/types";
 import toast, { Toaster } from "react-hot-toast";
 import Loading from "../components/Loading";
 
@@ -14,7 +14,7 @@ function SubmitFeedback({ params }: Props) {
   const [feebackFormModal, setfeebackFormModal] = useState(false);
   const [feedback, setfeedback] = useState<Feedback[]>([]);
   const [loading, setloading] = useState(false);
-  const [product, setproduct] = useState("");
+  const [product, setproduct] = useState<Business>();
 
   useEffect(() => {
     const fetchFeedback = async () => {
@@ -28,14 +28,19 @@ function SubmitFeedback({ params }: Props) {
         const resp = await data.json();
 
         if (resp.data) {
+          // console.log(resp.data);
+          if (resp.business) {
+            setloading(false);
+            setproduct(resp.business);
+          }
           setfeedback(resp.data);
-          setloading(false);
-          setproduct(resp.business.name);
         }
         if (resp.status === 404) {
-          setloading(false);
+          if (resp.business) {
+            setloading(false);
+            setproduct(resp.business);
+          }
           setfeedback([]);
-          setproduct(resp.business.name);
         }
       } catch (error) {
         console.log(error);
@@ -51,7 +56,7 @@ function SubmitFeedback({ params }: Props) {
       <div className="w-3/4 max-w-3xl mt-16  ">
         {product && (
           <div className=" p-5  bg-gradient-to-r from-cyan-400 to-blue-400 rounded-t-lg ">
-            <h1 className="text-xl font-bold  ">{product}</h1>
+            <h1 className="text-xl font-bold  ">{product.name}</h1>
             <p className="text-slate-700">
               Suggest feedback to help imporove our products and services
             </p>
@@ -85,6 +90,7 @@ function SubmitFeedback({ params }: Props) {
         <FeedbackForm
           setfeebackFormModal={setfeebackFormModal}
           id={params.id}
+          plan={product?.userid.plan}
         />
       )}
     </main>

@@ -10,6 +10,7 @@ type Props = {
   _id: string;
   isPublic: boolean;
   comments: [string];
+  business: string;
 };
 
 const Feedback = ({
@@ -19,9 +20,10 @@ const Feedback = ({
   _id,
   isPublic,
   comments,
+  business,
 }: Props) => {
   const [feebackModal, setfeebackModal] = useState(false);
-  const data = { title, description, votes, _id, isPublic, comments };
+  const data = { title, description, votes, _id, isPublic, comments, business };
 
   return (
     <>

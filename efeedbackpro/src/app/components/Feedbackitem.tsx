@@ -2,17 +2,18 @@
 import React, { useState } from "react";
 import { FaCaretUp } from "react-icons/fa";
 import FeedbackItemModal from "./FeedbackItemModal";
-import { Comments } from "@/state/types";
+import { Comments, User } from "@/state/types";
 
 type Props = {
   description: string;
   title: string;
   votes: number;
-  comments: Comments[];
+
   _id: string;
+  user: User;
 };
 
-const Feedbackitem = ({ description, title, votes, comments, _id }: Props) => {
+const Feedbackitem = ({ description, title, votes, _id }: Props) => {
   const [feebackItemModal, setfeebackItemModal] = useState(false);
 
   return (

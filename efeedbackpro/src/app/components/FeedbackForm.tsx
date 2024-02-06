@@ -3,12 +3,14 @@ import { FaWindowClose } from "react-icons/fa";
 import toast, { Toaster } from "react-hot-toast";
 import { handleFeedbackErrors } from "@/helperfunctions/helperfunctions";
 import Loading from "./Loading";
+import { plans } from "@/state/types";
 
 type Props = {
   setfeebackFormModal: React.Dispatch<React.SetStateAction<boolean>>;
   id: string;
+  plan?: string;
 };
-const FeedbackForm = ({ setfeebackFormModal, id }: Props) => {
+const FeedbackForm = ({ setfeebackFormModal, id, plan }: Props) => {
   const [title, settitle] = useState("");
   const [description, setdescription] = useState("");
   const [clientemail, setclientemail] = useState("");
@@ -114,13 +116,19 @@ const FeedbackForm = ({ setfeebackFormModal, id }: Props) => {
               ></textarea>
             </div>
           </div>
+
           <div className=" mt-4 w-5/6 flex justify-end flex-col md:flex-row ">
-            <input
-              onChange={(ev) => setimages(ev.target.files)}
-              type="file"
-              name="uploadfiles"
-              accept="image/png, image/jpeg"
-            />
+            {plan === plans.free ? (
+              ""
+            ) : (
+              <input
+                onChange={(ev) => setimages(ev.target.files)}
+                type="file"
+                name="uploadfiles"
+                accept="image/png, image/jpeg"
+              />
+            )}
+
             <button className="bg-blue-400 p-1 text-white rounded ">
               Create Post
             </button>

@@ -20,7 +20,10 @@ export async function GET(
 
   if (query) {
     try {
-      const business = await Business.findById(id);
+      const business = await Business.findById(id).populate(
+        "userid",
+        "-password"
+      );
       if (!business) {
         return NextResponse.json({ message: "Not found", status: 404 });
       }
