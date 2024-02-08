@@ -12,6 +12,8 @@ const subscriptionPage = () => {
   const [userDetails, setuserDetails] = useState<User>();
   const [loading, setloading] = useState(false);
 
+  const route = useRouter();
+
   useEffect(() => {
     if (!user) {
       const data = localStorage.getItem("user");
@@ -47,6 +49,9 @@ const subscriptionPage = () => {
         setuser(user);
         setuserDetails(data.user);
         setloading(false);
+        setTimeout(() => {
+          route.push("/dashboard");
+        }, 3000);
       }
     } catch (error) {
       console.log(error);

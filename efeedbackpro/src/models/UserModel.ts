@@ -23,6 +23,10 @@ export const userSchema = new Schema(
       type: Boolean,
       default: true,
     },
+    verified: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true }
 );

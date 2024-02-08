@@ -79,6 +79,23 @@ export const handleBusinessErrors = (status: number) => {
   return message;
 };
 
+export const handleconfirmpassworderrors = (status: number) => {
+  let message = "";
+  switch (status) {
+    case 404:
+      message = "invalid email";
+
+      break;
+
+    case 500:
+      message = "Server Error";
+
+      break;
+  }
+
+  return message;
+};
+
 // filters fro most voted feedback
 export const mostVoted = (feedback: Feedback[]) => {
   if (!feedback) return [];
