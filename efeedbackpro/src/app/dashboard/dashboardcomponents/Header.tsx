@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/navigation";
-import {
-  handleBusinessErrors,
-  mostVoted,
-} from "@/helperfunctions/helperfunctions";
+import { handleBusinessErrors } from "@/helperfunctions/helperfunctions";
 import { Business, Feedback } from "@/state/types";
 import AddProduct from "./AddProduct";
 import { useFeeddbackState } from "@/state/state";
 import ProductModal from "./ProductModal";
+import Link from "next/link";
 
 const Header = () => {
   const { user, dashboardfeedback, setdashboardfeedback, refetch } =
@@ -85,14 +83,22 @@ const Header = () => {
           <button className="text-slate-700 text-xl font-bold ">Bugs</button>
         </div> */}
         {/* auth details */}
-        <div className=" flex items-center justify-center  flex-1 max-w-xs flex-col  ">
-          <img
+        <div className=" flex items-center justify-center  flex-1 max-w-xs flex-col font-bold ">
+          {/* <img
             className="w-8 h-8 rounded-3xl "
             src="https://images.unsplash.com/photo-1614027164847-1b28cfe1df60?q=80&w=1386&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
             alt=""
-          />
+          /> */}
+          <Link
+            href="/dashboard/subscription"
+            className="text-xs bg-blue-400  p-1 rounded  "
+          >
+            Change Plan: Free
+          </Link>
           {user && (
-            <p className="text-slate-700 font-bold text-xs ">{user?.email}</p>
+            <p className="text-slate-700 font-bold md:text-sm  text-xs ">
+              {user?.email}
+            </p>
           )}
           <button onClick={logout} className="text-slate-700 text-l  ">
             Log Out
@@ -148,6 +154,7 @@ const Header = () => {
         {addproductmodal && (
           <AddProduct
             setproduct={setproduct}
+            product={product}
             setaddproductmodal={setaddproductmodal}
           />
         )}

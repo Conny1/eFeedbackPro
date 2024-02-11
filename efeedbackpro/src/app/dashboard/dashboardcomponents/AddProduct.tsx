@@ -2,18 +2,25 @@ import React, { useState } from "react";
 import { FaWindowClose } from "react-icons/fa";
 import toast, { Toaster } from "react-hot-toast";
 import { useFeeddbackState } from "@/state/state";
-import { Business } from "@/state/types";
+import { Business, plans } from "@/state/types";
 
 type Props = {
   setaddproductmodal: React.Dispatch<React.SetStateAction<boolean>>;
   setproduct: React.Dispatch<React.SetStateAction<Business[]>>;
+  product: Business[];
 };
-const AddProduct = ({ setproduct, setaddproductmodal }: Props) => {
+const AddProduct = ({ setproduct, setaddproductmodal, product }: Props) => {
   const [productname, setproductname] = useState("");
   const { user } = useFeeddbackState();
 
   const addProduct = async (ev: React.FormEvent<HTMLFormElement>) => {
     ev.preventDefault();
+
+    if (user?.plan === plans.free && product.length >= 1) {
+      return toast.error(
+        "Upgrade your subscription to be able to add other products"
+      );
+    }
     if (!productname) {
       return toast("Provide the product name");
     }

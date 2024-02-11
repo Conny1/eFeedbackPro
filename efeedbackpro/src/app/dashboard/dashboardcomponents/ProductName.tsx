@@ -1,4 +1,4 @@
-import FeedbackLink from "@/app/components/FeedbackLink";
+import FeedbackLink from "@/app/dashboard/dashboardcomponents/FeedbackLink";
 import { handleFeedbackErrors } from "@/helperfunctions/helperfunctions";
 import { useFeeddbackState } from "@/state/state";
 import React, { useEffect, useState } from "react";
@@ -66,14 +66,14 @@ const ProductName = ({ name, _id, setselectedProduct }: Props) => {
     } catch (error) {}
   };
   return (
-    <div className="  flex gap-3  w-full   h-16 ">
+    <div className="  flex gap-3  w-full   md:h-16 flex-col md:flex-row outline outline-1 outline-grey ">
       <button
         onClick={fetchFeedback}
         className=" bg-slate-200 text-slate-700 text-l flex-1 rounded "
       >
         {productname}
       </button>
-      <div className="flex flex-col-reverse justify-between ">
+      <div className="flex md:flex-col-reverse justify-between flex-row  ">
         <MdDelete
           onClick={deleteProduct}
           className="text-2xl text-red-400 cursor-pointer "

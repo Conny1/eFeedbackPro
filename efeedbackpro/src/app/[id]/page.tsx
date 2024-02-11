@@ -41,6 +41,7 @@ function SubmitFeedback({ params }: Props) {
             setproduct(resp.business);
           }
           setfeedback([]);
+          setloading(false);
         }
       } catch (error) {
         console.log(error);
@@ -62,22 +63,31 @@ function SubmitFeedback({ params }: Props) {
             </p>
           </div>
         )}
+        {/* Only display if the product exists */}
+        {product && (
+          <div className="bg-slate-200 p-1 px-5 flex justify-between flex-col-reverse md:flex-row ">
+            <p>Vote for feedback or suggested improvement by others</p>
 
-        <div className="bg-slate-200 p-1 px-5 flex justify-between flex-col-reverse md:flex-row ">
-          <p>Vote for feedback or suggested improvement by others</p>
-          <button
-            onClick={() => setfeebackFormModal(true)}
-            className="bg-blue-400 text-white p-1 rounded "
-          >
-            Make a Suggestion
-          </button>
-        </div>
+            <button
+              onClick={() => setfeebackFormModal(true)}
+              className="bg-blue-400 text-white p-1 rounded "
+            >
+              Make a Suggestion
+            </button>
+          </div>
+        )}
 
         <div className="px-5 shadow ">
           {loading ? (
             <Loading />
           ) : feedback.length === 0 ? (
-            <p>Data not available for voting. You can suggest more feedback</p>
+            product ? (
+              <p>
+                Data not available for voting. You can suggest more feedback
+              </p>
+            ) : (
+              "Product Does Not Exist"
+            )
           ) : (
             feedback.map((item) => {
               return <Feedbackitem key={item._id} {...item} />;

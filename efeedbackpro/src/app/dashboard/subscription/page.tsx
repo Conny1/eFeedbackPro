@@ -61,9 +61,11 @@ const subscriptionPage = () => {
   return (
     <div className="min-h-screen flex items-center justify-center flex-col ">
       <Toaster />
-      <Link href="/dashboard"> Back to Dashboard</Link>
+      <Link href="/dashboard" className="bg-blue-400 p-1 rounded font-bold ">
+        Back to Dashboard
+      </Link>
       <p className="mb-4 text-xl ">Choose a Plan</p>
-      <div className=" flex gap-3  ">
+      <div className=" flex gap-3 flex-col md:flex-row ">
         <div className="bg-white p-8 rounded shadow-md flex flex-col justify-between items-center ">
           <h1 className="text-3xl font-bold mb-6">Free trial</h1>
           <p className="mb-4">Free trial</p>
@@ -72,7 +74,7 @@ const subscriptionPage = () => {
             - Collect limited feedback
           </p>
           <p className="mb-4  w-4/5 bg-slate-200 p-1 ">
-            - Collect Feedback for a maximum of 1 Products
+            - Collect Feedback for a maximum of 1 Product
           </p>
           <p className="mb-4  w-4/5 bg-slate-200 p-1 ">
             - Allow users to vote for feedback
@@ -80,12 +82,16 @@ const subscriptionPage = () => {
           <div>
             {loading ? (
               <Loading />
+            ) : userDetails?.plan === plans.free ? (
+              <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                Current Plan
+              </button>
             ) : (
               <button
                 onClick={freePlan}
                 className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
               >
-                {userDetails?.plan === plans.free ? "Current Plan" : "Subcribe"}
+                Subscribe
               </button>
             )}
           </div>
@@ -107,9 +113,9 @@ const subscriptionPage = () => {
             - Embeded link to collect feedback directly from your site
           </p>
 
-          <p className="mb-4  w-4/5 bg-slate-200 p-1 ">
+          {/* <p className="mb-4  w-4/5 bg-slate-200 p-1 ">
             - Add users to help manage feedback
-          </p>
+          </p> */}
           <p className="mb-4  w-4/5 bg-slate-200 p-1 ">
             - File uploads in feedback collection
           </p>

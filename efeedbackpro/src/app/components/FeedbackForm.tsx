@@ -51,6 +51,7 @@ const FeedbackForm = ({ setfeebackFormModal, id, plan }: Props) => {
         }, 3000);
       } else {
         // console.log(resp);
+        setloading(false);
         return toast.error(handleFeedbackErrors(resp.status));
       }
     } catch (error) {
