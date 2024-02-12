@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import React, { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 
-const reset = () => {
+const Reset = () => {
   const [password, setpassword] = useState("");
   const [loading, setloading] = useState(false);
   const [showPassword, setshowPassword] = useState(false);
@@ -103,4 +103,4 @@ const reset = () => {
   );
 };
 
-export default reset;
+export default Reset;

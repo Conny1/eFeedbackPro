@@ -11,7 +11,7 @@ const Auth = () => {
       <div className=" mt-5 shadow-md flex  md:w-96 w-11/12 justify-evenly rounded  ">
         <button
           onClick={() => setisLogin(true)}
-          className={` font-bold text-2xl flex-1 h-14  text-sm  ${
+          className={` font-bold  flex-1 h-14  text-sm  ${
             !isLogin ? "bg-gradient-to-r from-cyan-400 to-blue-400" : "bg-white"
           }   rounded `}
         >
@@ -19,7 +19,7 @@ const Auth = () => {
         </button>
         <button
           onClick={() => setisLogin(false)}
-          className={` font-bold text-2xl flex-1 h-14  text-sm  ${
+          className={` font-bold  flex-1 h-14  text-sm  ${
             isLogin ? "bg-gradient-to-r from-cyan-400 to-blue-400" : "bg-white"
           }   rounded `}
         >

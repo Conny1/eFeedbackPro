@@ -49,7 +49,7 @@ function SubmitFeedback({ params }: Props) {
     };
 
     fetchFeedback();
-  }, []);
+  }, [params.id]);
 
   return (
     <main className=" relative flex min-h-screen   flex-col   items-center ">

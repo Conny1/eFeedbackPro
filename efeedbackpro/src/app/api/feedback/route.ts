@@ -53,7 +53,7 @@ export async function POST(request: NextRequest) {
 
 // @descrition upvote a feedback
 // @route   /api/feedback -PUT
-export async function PUT(request: NextResponse) {
+export async function PUT(request: NextRequest) {
   try {
     const reqBody = await request.json();
 
@@ -77,7 +77,7 @@ export async function PUT(request: NextResponse) {
 
 // @descrition Delete a feedback
 // @route   /api/feedback -DELETE
-export async function DELETE(request: NextResponse) {
+export async function DELETE(request: NextRequest) {
   const token = request.cookies.get("token")?.value;
   const isAuthenticated = verifyToken(token);
   if (!isAuthenticated)

@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 
-const subscriptionPage = () => {
+const SubscriptionPage = () => {
   const { user, setuser } = useFeeddbackState();
   const [userDetails, setuserDetails] = useState<User>();
   const [loading, setloading] = useState(false);
@@ -23,7 +23,7 @@ const subscriptionPage = () => {
     } else if (user) {
       setuserDetails(user);
     }
-  }, []);
+  }, [user]);
 
   const freePlan = async (
     ev: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -135,4 +135,4 @@ const subscriptionPage = () => {
   );
 };
 
-export default subscriptionPage;
+export default SubscriptionPage;

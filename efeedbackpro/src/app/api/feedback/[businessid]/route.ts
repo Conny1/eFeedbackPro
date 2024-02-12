@@ -73,7 +73,7 @@ export async function GET(
 // @descrition make feedback public or private
 // @route   /api/feedback/:feedback -PUT
 export async function PUT(
-  request: NextResponse,
+  request: NextRequest,
   { params }: { params: { businessid: string } }
 ) {
   const token = request.cookies.get("token")?.value;

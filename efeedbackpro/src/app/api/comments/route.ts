@@ -1,13 +1,13 @@
 import { connectToDb } from "@/dbconfig/dbconfig";
 import Comment from "@/models/CommentModel";
 import Feedback from "@/models/FeedbackModel";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 connectToDb();
 
 // @descrition Give a comment
 // @route   /api/comment -POST
-export async function POST(request: NextResponse) {
+export async function POST(request: NextRequest) {
   try {
     const reqBody = await request.json();
     // addcoments
@@ -29,7 +29,7 @@ export async function POST(request: NextResponse) {
 
 // @descrition Like a comment
 // @route   /api/comment -PUT
-export async function PUT(request: NextResponse) {
+export async function PUT(request: NextRequest) {
   try {
     const reqBody = await request.json();
 

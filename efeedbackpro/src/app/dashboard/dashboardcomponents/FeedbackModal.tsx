@@ -47,7 +47,7 @@ const FeedbackModal = ({
     };
 
     fetchFeedbackComments();
-  }, []);
+  }, [_id]);
 
   const deleteFeedback = async () => {
     setrefetchFeeddback(false);

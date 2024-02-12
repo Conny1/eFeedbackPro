@@ -21,9 +21,9 @@ const Home: React.FC = () => {
             <p className="text-lg text-white mb-8">
               Ready to take your product feedback collection to the next level?
               Sign up for eFeedbackPro now and unlock the power of actionable
-              insights. Whether you're launching a new product or refining an
-              existing one, eFeedbackPro empowers you to make informed decisions
-              and drive success.
+              insights. Whether you&apos;re launching a new product or refining
+              an existing one, eFeedbackPro empowers you to make informed
+              decisions and drive success.
             </p>
             <a
               href="/auth"

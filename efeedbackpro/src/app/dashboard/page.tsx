@@ -5,7 +5,7 @@ import Header from "./dashboardcomponents/Header";
 import { useFeeddbackState } from "@/state/state";
 import { useRouter } from "next/navigation";
 
-const dashboard = () => {
+const Dashboard = () => {
   const { setuser, dashboardfeedback } = useFeeddbackState();
   const router = useRouter();
   useEffect(() => {
@@ -20,7 +20,7 @@ const dashboard = () => {
         }
       }
     }
-  }, []);
+  }, [setuser, router]);
 
   return (
     <main>
@@ -37,4 +37,4 @@ const dashboard = () => {
   );
 };
 
-export default dashboard;
+export default Dashboard;
