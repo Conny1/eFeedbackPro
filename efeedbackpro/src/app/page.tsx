@@ -1,11 +1,7 @@
 "use client";
 import { useState } from "react";
-
 import Nav from "./components/Nav";
 import EachFeature from "./components/EachFeature";
-import collect from "../assets/collect.png";
-import manage from "../assets/manage.png";
-import analyze from "../assets/analyze.png";
 
 const Home: React.FC = () => {
   const [isCollect, setIsCollect] = useState<boolean>(true);

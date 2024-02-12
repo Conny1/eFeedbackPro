@@ -3,11 +3,13 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
+import Loading from "./Loading";
 
 const Login = () => {
   const [password, setpassword] = useState("");
   const [email, setemail] = useState("");
   const [showPassword, setshowPassword] = useState(false);
+  const [loading, setloading] = useState(false);
 
   const router = useRouter();
 
@@ -27,6 +29,7 @@ const Login = () => {
       return toast.error("Give all provided details");
     }
     try {
+      setloading(true);
       const resp = await fetch(`../api/user/login`, {
         method: "POST",
         headers: {
@@ -36,8 +39,11 @@ const Login = () => {
       });
 
       const data = await resp.json();
+      setloading(false);
       // handle auth errors
+
       const errorMessage = handleAuthErrors(data.status);
+
       if (errorMessage) {
         return toast.error(errorMessage);
       }
@@ -65,16 +71,18 @@ const Login = () => {
         <Toaster />
         <input
           onChange={(ev) => setemail(ev.target.value)}
-          className="p-3 shadow-md"
+          className="p-3 outline outline-1 outline-gray-400 hover:outline-blue-400 "
           type="email"
-          placeholder="email"
+          placeholder="Email"
+          required
         />
         <div className="flex">
           <input
             onChange={(ev) => setpassword(ev.target.value)}
-            className="p-3 shadow-md flex-1"
+            className="p-3  outline outline-1 outline-gray-400 hover:outline-blue-400 flex-1"
             type={!showPassword ? "password" : "text"}
-            placeholder="password"
+            placeholder="Password"
+            required
           />
           {!showPassword ? (
             <button
@@ -92,12 +100,15 @@ const Login = () => {
             </button>
           )}
         </div>
-
-        <input
-          className=" cursor-pointer p-3 w-28 self-center mt-3 bg-gradient-to-r from-cyan-400 to-blue-400 rounded "
-          type="submit"
-          value="Login"
-        />
+        {loading ? (
+          <Loading />
+        ) : (
+          <input
+            className=" cursor-pointer p-3 w-28 self-center mt-3 bg-gradient-to-r from-cyan-400 to-blue-400 rounded "
+            type="submit"
+            value="Login"
+          />
+        )}
       </form>
       <Link className="text-sm font-bold text-blue-400" href="/auth/confirm">
         Forgot password ?. Click here.

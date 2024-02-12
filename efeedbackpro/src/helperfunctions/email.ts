@@ -2,20 +2,21 @@ import nodemailer from "nodemailer";
 
 // email configurations
 const transporter = nodemailer.createTransport({
-  host: "mail.tujivuniewildlifefoundation.com",
+  host: "mail.efeedbackpro.com",
   port: 465,
   secure: true,
   auth: {
     // TODO: replace `user` and `pass` values from <https://forwardemail.net>
-    user: "admin@tujivuniewildlifefoundation.com",
-    pass: "WCFl@0R81nee",
+    user: "admin@efeedbackpro.com",
+    pass: process.env.EMAIL_PASSWORD,
   },
 });
+console.log(process.env.EMAIL_PASSWORD);
 
 async function sendMail(email: string) {
   // send mail with defined transport object
   const info = await transporter.sendMail({
-    from: '"admin@tujivuniewildlifefoundation.com" <admin@tujivuniewildlifefoundation.com>', // sender address
+    from: '"admin@efeedbackpro.com" <admin@efeedbackpro.com>', // sender address
     to: email, // list of receivers
     subject: "Password Reset", // Subject line
     text: "Password reset", // plain text body

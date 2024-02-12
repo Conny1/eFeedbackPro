@@ -5,7 +5,7 @@ export const handleAuthErrors = (status: number) => {
   let message = "";
   switch (status) {
     case 404:
-      message = "Account with that email exists";
+      message = "Account with that email does not exists";
 
       break;
 

@@ -12,6 +12,7 @@
     "@reduxjs/toolkit": "^2.1.0",
     "bcryptjs": "^2.4.3",
     "clipboard-copy": "^4.0.1",
+    "email-validator": "^2.0.4",
     "firebase": "^8.10.1",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.0.4",

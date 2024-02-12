@@ -1,6 +1,8 @@
 import { handleAuthErrors } from "@/helperfunctions/helperfunctions";
 import React, { useState } from "react";
 import { Toaster, toast } from "react-hot-toast";
+import Loading from "./Loading";
+import * as EmailValidator from "email-validator";
 
 const Signup = () => {
   const [name, setname] = useState("");
@@ -8,6 +10,7 @@ const Signup = () => {
   const [email, setemail] = useState("");
   const [confirmPassword, setconfirmPassword] = useState("");
   const [showPassword, setshowPassword] = useState(false);
+  const [loading, setloading] = useState(false);
 
   const showpwrd = (ev: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     ev.preventDefault();
@@ -24,7 +27,15 @@ const Signup = () => {
     if (!name || !email || !password) {
       return alert("Give all provided details");
     }
+    const isEmail = EmailValidator.validate("test@email.com"); // true
+    if (!isEmail) {
+      return toast.error("Enter a valid email");
+    }
+    if (confirmPassword !== password) {
+      return toast.error("Password does not match");
+    }
     try {
+      setloading(true);
       const resp = await fetch(`../api/user/signup`, {
         method: "POST",
         headers: {
@@ -34,13 +45,15 @@ const Signup = () => {
       });
 
       const data = await resp.json();
+      setloading(false);
       const errorMessage = handleAuthErrors(data.status);
+
       if (errorMessage) {
         return toast.error(errorMessage);
       }
 
       if (data.status === 200) {
-        alert("Account created succesfully. You can now Log in ");
+        toast.success("Account created succesfully. You can now Log in ");
       }
     } catch (error) {
       console.log(error);
@@ -55,20 +68,20 @@ const Signup = () => {
       <Toaster />
       <input
         onChange={(ev) => setname(ev.target.value)}
-        className="p-3 shadow-md"
+        className="p-3 outline outline-1 outline-gray-400 hover:outline-blue-400"
         type="text"
         placeholder="Name"
       />
       <input
         onChange={(ev) => setemail(ev.target.value)}
-        className="p-3 shadow-md"
+        className="p-3 outline outline-1 outline-gray-400 hover:outline-blue-400"
         type="email"
         placeholder="email"
       />
       <div className="flex">
         <input
           onChange={(ev) => setpassword(ev.target.value)}
-          className="p-3 shadow-md flex-1"
+          className="p-3 outline outline-1 outline-gray-400 hover:outline-blue-400 flex-1"
           type={!showPassword ? "password" : "text"}
           placeholder="password"
         />
@@ -90,16 +103,20 @@ const Signup = () => {
       </div>
       <input
         onChange={(ev) => setconfirmPassword(ev.target.value)}
-        className="p-3 shadow-md"
+        className="p-3 outline outline-1 outline-gray-400 hover:outline-blue-400 "
         type={!showPassword ? "password" : "text"}
         placeholder="confirm password"
       />
 
-      <input
-        className=" cursor-pointer p-3 w-28 self-center mt-3 bg-gradient-to-r from-cyan-400 to-blue-400 rounded "
-        type="submit"
-        value="Signup"
-      />
+      {loading ? (
+        <Loading />
+      ) : (
+        <input
+          className=" cursor-pointer p-3 w-28 self-center mt-3 bg-gradient-to-r from-cyan-400 to-blue-400 rounded "
+          type="submit"
+          value="Sign Up"
+        />
+      )}
     </form>
   );
 };
