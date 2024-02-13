@@ -60,7 +60,7 @@ const FeedbackForm = ({ setfeebackFormModal, id, plan }: Props) => {
   };
 
   return (
-    <div className=" flex justify-center md:items-center absolute bg-black   w-full h-full bg-opacity-80 ">
+    <div className=" flex justify-center md:items-center fixed bg-black   w-full h-full bg-opacity-80 ">
       {loading ? (
         <Loading />
       ) : (
@@ -74,7 +74,7 @@ const FeedbackForm = ({ setfeebackFormModal, id, plan }: Props) => {
             className="absolute left-4 text-lg"
           />
           <h3 className="w-5/6 font-bold h-8  flex items-center justify-center  ">
-            Make a sugestion
+            Make a sugestion or Give feedback
           </h3>
           <hr className=" w-full" />
           <div className="   w-5/6 flex flex-col justify-evenly min-h-48 ">
@@ -130,8 +130,8 @@ const FeedbackForm = ({ setfeebackFormModal, id, plan }: Props) => {
               />
             )}
 
-            <button className="bg-blue-400 p-1 text-white rounded ">
-              Create Post
+            <button className="bg-blue-400 p-2 text-white rounded ">
+              Submit
             </button>
           </div>
         </form>

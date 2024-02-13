@@ -106,7 +106,7 @@ const FeedbackModal = ({
   };
 
   return (
-    <div className=" flex justify-center md:items-center absolute top-0 left-0 bg-black   w-full h-full bg-opacity-80 ">
+    <div className=" flex justify-center md:items-center fixed top-0 left-0 bg-black   w-full h-full bg-opacity-80 ">
       <Toaster />
       <div className=" relative rounded p-5  w-11/12 max-w-screen-md bg-white flex flex-col  items-center  ">
         <FaWindowClose

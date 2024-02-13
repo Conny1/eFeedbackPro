@@ -7,7 +7,7 @@ const Home: React.FC = () => {
   const [isCollect, setIsCollect] = useState<boolean>(true);
   const [isManage, setIsManage] = useState<boolean>(false);
   const [isAnalyze, setIsAnalyze] = useState<boolean>(false);
-
+  const [isVote, setisVote] = useState<boolean>(false);
   return (
     <div>
       <Nav />
@@ -44,7 +44,7 @@ const Home: React.FC = () => {
           <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center">
             Our Features
           </h2>
-          <div className="flex justify-center items-center mb-10">
+          <div className="flex justify-center items-center mb-10  ">
             <button
               className={`mx-2 py-2 px-4 rounded-lg font-semibold text-sm ${
                 isCollect
@@ -55,6 +55,7 @@ const Home: React.FC = () => {
                 setIsCollect(true);
                 setIsManage(false);
                 setIsAnalyze(false);
+                setisVote(false);
               }}
             >
               Collect
@@ -67,8 +68,9 @@ const Home: React.FC = () => {
               }`}
               onClick={() => {
                 setIsCollect(false);
-                setIsManage(true);
+                setisVote(false);
                 setIsAnalyze(false);
+                setIsManage(true);
               }}
             >
               Manage
@@ -82,10 +84,26 @@ const Home: React.FC = () => {
               onClick={() => {
                 setIsCollect(false);
                 setIsManage(false);
+                setisVote(false);
                 setIsAnalyze(true);
               }}
             >
               Analyze
+            </button>
+            <button
+              className={`mx-2 py-2 px-4 rounded-lg font-semibold text-sm ${
+                isVote
+                  ? "bg-blue-400 text-white"
+                  : "bg-white text-gray-700 hover:bg-gray-200"
+              }`}
+              onClick={() => {
+                setIsCollect(false);
+                setIsManage(false);
+                setIsAnalyze(false);
+                setisVote(true);
+              }}
+            >
+              User Insights
             </button>
           </div>
           {isCollect && (
@@ -107,6 +125,13 @@ const Home: React.FC = () => {
               pic="./images/analyze.png"
               heading="Insightful Feedback Analysis"
               explanation="Turn feedback into actionable insights with our powerful analysis tools."
+            />
+          )}
+          {isVote && (
+            <EachFeature
+              pic="./images/vote.png"
+              heading="User interaction"
+              explanation="Get insights on  feedback from the users by enabling them to vote and provide comments on each feedback."
             />
           )}
         </div>

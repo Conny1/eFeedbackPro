@@ -7,7 +7,8 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "efeedbackpro",
-  description: "",
+  description:
+    "eFeedbackPro: Your go-to platform for collecting comprehensive feedback on any product. Streamline your feedback collection process effortlessly and make data-driven decisions to enhance your products' performance. Sign up now for insightful analytics and actionable insights.",
 };
 
 export default function RootLayout({
