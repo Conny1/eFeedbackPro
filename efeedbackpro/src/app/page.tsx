@@ -2,12 +2,40 @@
 import { useState } from "react";
 import Nav from "./components/Nav";
 import EachFeature from "./components/EachFeature";
+import Pricing from "./components/Pricing";
+
+type tutorialType = {
+  step: string;
+  pic: string;
+};
+
+const tutorial: tutorialType[] = [
+  {
+    step: "Create your account and Log in.",
+    pic: "./images/login.png",
+  },
+
+  {
+    step: "Choose your subscription plan.",
+    pic: "./images/chooseplan.png",
+  },
+  {
+    step: "Add your product.",
+    pic: "./images/addproduct.png",
+  },
+  {
+    step: "Head over to products menu and copy the feedback link and send it to your users to collect feedback.",
+    pic: "./images/sendlink.png",
+  },
+];
 
 const Home: React.FC = () => {
   const [isCollect, setIsCollect] = useState<boolean>(true);
   const [isManage, setIsManage] = useState<boolean>(false);
   const [isAnalyze, setIsAnalyze] = useState<boolean>(false);
   const [isVote, setisVote] = useState<boolean>(false);
+  const [steps, setsteps] = useState(0);
+
   return (
     <div>
       <Nav />
@@ -134,6 +162,46 @@ const Home: React.FC = () => {
               explanation="Get insights on  feedback from the users by enabling them to vote and provide comments on each feedback."
             />
           )}
+        </div>
+      </section>
+
+      <section className="max-w-4xl mx-auto flex flex-col items-center ">
+        <h2 className="text-3xl font-bold mb-8">Pricing</h2>
+
+        <div>
+          <Pricing />
+        </div>
+      </section>
+
+      <section className="max-w-4xl mx-auto flex flex-col items-center ">
+        <h2 className="text-3xl font-bold mb-8">How it works</h2>
+        <div className="flex flex-col items-center relative ">
+          <p className="font-semibold mb-8 p-2 ">
+            step {steps + 1}: {tutorial[steps].step}
+          </p>
+          <button
+            onClick={() => setsteps((prev) => (prev === 0 ? 0 : prev - 1))}
+            className=" sm:absolute left-20 bottom-60 bg-blue-400 p-2 rounded w-16 "
+          >
+            prev
+          </button>
+          <div className="w-full">
+            <img
+              className="object-cover sm:object-contain"
+              src={tutorial[steps].pic}
+              alt="step"
+            />
+          </div>
+          <button
+            onClick={() =>
+              setsteps((prev) =>
+                prev < tutorial.length - 1 ? prev + 1 : tutorial.length - 1
+              )
+            }
+            className="sm:absolute right-20 bottom-60 bg-blue-400 p-2 rounded w-16 "
+          >
+            next
+          </button>
         </div>
       </section>
 
