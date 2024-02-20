@@ -3,6 +3,7 @@ import { FaWindowClose } from "react-icons/fa";
 import toast, { Toaster } from "react-hot-toast";
 import { useFeeddbackState } from "@/state/state";
 import { Business, plans } from "@/state/types";
+import { maximumProductsBysubscription } from "@/helperfunctions/checkplan";
 
 type Props = {
   setaddproductmodal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -15,10 +16,11 @@ const AddProduct = ({ setproduct, setaddproductmodal, product }: Props) => {
 
   const addProduct = async (ev: React.FormEvent<HTMLFormElement>) => {
     ev.preventDefault();
-
-    if (user?.plan === plans.free && product.length >= 1) {
+    // confirm plan
+    const userplan = user?.plan as string;
+    if (maximumProductsBysubscription(userplan, product.length) === false) {
       return toast.error(
-        "Upgrade your subscription to be able to add other products"
+        "You have reached the maximum number of products for your subscription"
       );
     }
     if (!productname) {

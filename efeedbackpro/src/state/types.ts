@@ -42,7 +42,7 @@ export type Feedback = {
   votes: number;
   isPublic: boolean;
   uploads: string[];
-  client: Client;
+  client: string;
   business: string;
 };
 

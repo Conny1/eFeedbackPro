@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { FaCaretUp } from "react-icons/fa";
 import FeedbackItemModal from "./FeedbackItemModal";
-import { Comments, User } from "@/state/types";
+import { User } from "@/state/types";
 
 type Props = {
   description: string;

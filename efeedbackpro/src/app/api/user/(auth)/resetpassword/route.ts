@@ -1,7 +1,7 @@
 import User from "@/models/UserModel";
 import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
-import sendMail from "@/helperfunctions/email";
+import { sendMail } from "@/helperfunctions/email";
 // @ description Confirm email fro password rest
 // @ route /api/user/resetpassword -POST
 

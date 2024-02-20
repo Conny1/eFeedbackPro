@@ -1,4 +1,4 @@
-import { Feedback } from "@/state/types";
+import { Feedback, plans } from "@/state/types";
 import jwt from "jsonwebtoken";
 
 export const handleAuthErrors = (status: number) => {
@@ -118,4 +118,14 @@ export const verifyToken = (token?: string) => {
   });
 
   return bol;
+};
+
+//********************/ check user Plans***********************//
+
+// basic plan
+export const Basicplan = (userplan: string) => {
+  if (userplan === plans.free) {
+    return true;
+  }
+  return false;
 };

@@ -1,10 +1,11 @@
-import { Comments } from "@/state/types";
+import { Comments, plans } from "@/state/types";
 import React, { useState, useEffect } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { FaWindowClose } from "react-icons/fa";
 import { FaCaretUp } from "react-icons/fa";
 import Comment from "@/app/components/Comments";
 import { useFeeddbackState } from "@/state/state";
+import ReplyEmailForm from "./ReplyEmailForm";
 
 type Props = {
   setfeebackModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -15,6 +16,7 @@ type Props = {
   isPublic: boolean;
   comments: [string];
   business: string;
+  client: string;
 };
 const FeedbackModal = ({
   setfeebackModal,
@@ -25,11 +27,13 @@ const FeedbackModal = ({
   isPublic,
   comments: commentids,
   business,
+  client,
 }: Props) => {
   const [comments, setcomments] = useState<Comments[]>([]);
-  const { setrefetchFeeddback, dashboardfeedback, setdashboardfeedback } =
+  const { user, setrefetchFeeddback, dashboardfeedback, setdashboardfeedback } =
     useFeeddbackState();
   const [publicfeedback, setpublic] = useState(isPublic);
+  const [reply, setreply] = useState(false);
 
   useEffect(() => {
     const fetchFeedbackComments = async () => {
@@ -122,10 +126,21 @@ const FeedbackModal = ({
 
         <p className="text-sm w-5/6 ">{description}</p>
 
-        <div className="w-5/6 p-1 px-5 flex justify-end gap-2 ">
+        <div className="w-5/6 p-1 px-5 flex justify-end gap-2 flex-wrap ">
           <button className=" flex text-sm justify-center items-center bg-blue-400 text-white p-1 rounded ">
             <FaCaretUp className="text-lg" /> Upvotes {votes}
           </button>
+          {/* basic plan feature of replying to users */}
+          {user?.plan === plans.basic && (
+            <button
+              onClick={() => setreply(true)}
+              className=" flex text-sm justify-center items-center bg-blue-400 text-white p-1 rounded "
+            >
+              Reply
+            </button>
+          )}
+          {/* reply to Feedback via email modal */}
+          {reply && <ReplyEmailForm setreply={setreply} client={client} />}
           <button
             onClick={makePublicOrPrivate}
             className=" flex text-sm justify-center items-center bg-green-400 text-white p-1 rounded "
