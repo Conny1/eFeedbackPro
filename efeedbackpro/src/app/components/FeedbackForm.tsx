@@ -4,6 +4,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { handleFeedbackErrors } from "@/helperfunctions/helperfunctions";
 import Loading from "./Loading";
 import { plans } from "@/state/types";
+import { FaImage } from "react-icons/fa6";
 
 type Props = {
   setfeebackFormModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -18,7 +19,15 @@ const FeedbackForm = ({ setfeebackFormModal, id, plan }: Props) => {
   const [images, setimages] = useState<FileList | null>(null);
   const [uploadUrl, setuploadUrl] = useState([]);
 
-  const UploadImage = () => {};
+  const UploadImage = async (
+    ev: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    ev.preventDefault();
+    if (!images) return toast.error("No image has been Added");
+    const file = images[0];
+
+    console.log(file);
+  };
 
   const createPost = async (ev: React.FormEvent<HTMLFormElement>) => {
     ev.preventDefault();
@@ -118,17 +127,23 @@ const FeedbackForm = ({ setfeebackFormModal, id, plan }: Props) => {
             </div>
           </div>
 
-          <div className=" mt-4 w-5/6 flex justify-end flex-col md:flex-row ">
-            {plan === plans.free ? (
+          <div className=" mt-4 w-5/6 flex justify-end flex-col md:flex-row  gap-4 ">
+            {plan !== plans.free ? (
               ""
             ) : (
-              <input
-                onChange={(ev) => setimages(ev.target.files)}
-                type="file"
-                name="uploadfiles"
-                accept="image/png, image/jpeg"
-              />
+              <label className=" ">
+                <input
+                  onChange={(ev) => setimages(ev.target.files)}
+                  type="file"
+                  name="uploadfiles"
+                  accept="image/png, image/jpeg"
+                />
+              </label>
             )}
+
+            <button className="flex gap-1 items-center" onClick={UploadImage}>
+              Upload <FaImage />{" "}
+            </button>
 
             <button className="bg-blue-400 p-2 text-white rounded ">
               Submit

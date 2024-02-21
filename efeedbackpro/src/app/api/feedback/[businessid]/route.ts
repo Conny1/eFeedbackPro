@@ -2,6 +2,8 @@ import { connectToDb } from "@/dbconfig/dbconfig";
 import { verifyToken } from "@/helperfunctions/helperfunctions";
 import Business from "@/models/BusinessModel";
 import Feedback from "@/models/FeedbackModel";
+import User from "@/models/UserModel";
+
 import { NextRequest, NextResponse } from "next/server";
 
 connectToDb();
@@ -20,13 +22,12 @@ export async function GET(
 
   if (query) {
     try {
-      const business = await Business.findById(id).populate(
-        "userid",
-        "-password"
-      );
+      let business = await Business.findById(id);
+
       if (!business) {
         return NextResponse.json({ message: "Not found", status: 404 });
       }
+      business["userid"] = await User.findById(business.userid, "-password");
 
       const data = await Feedback.find({
         business: id,
@@ -40,6 +41,8 @@ export async function GET(
           business,
         });
       }
+
+      // console.log(business);
 
       return NextResponse.json({ status: 200, data, business });
     } catch (error) {
