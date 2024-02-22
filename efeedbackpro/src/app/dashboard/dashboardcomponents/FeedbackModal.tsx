@@ -1,11 +1,14 @@
 import { Comments, plans } from "@/state/types";
 import React, { useState, useEffect } from "react";
-import toast, { Toaster } from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 import { FaWindowClose } from "react-icons/fa";
 import { FaCaretUp } from "react-icons/fa";
 import Comment from "@/app/components/Comments";
 import { useFeeddbackState } from "@/state/state";
 import ReplyEmailForm from "./ReplyEmailForm";
+import FeedbackImage from "./FeedbackImage";
+
+import { CgAttachment } from "react-icons/cg";
 
 type Props = {
   setfeebackModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -17,6 +20,7 @@ type Props = {
   comments: [string];
   business: string;
   client: string;
+  uploads: string[];
 };
 const FeedbackModal = ({
   setfeebackModal,
@@ -28,12 +32,14 @@ const FeedbackModal = ({
   comments: commentids,
   business,
   client,
+  uploads,
 }: Props) => {
   const [comments, setcomments] = useState<Comments[]>([]);
   const { user, setrefetchFeeddback, dashboardfeedback, setdashboardfeedback } =
     useFeeddbackState();
   const [publicfeedback, setpublic] = useState(isPublic);
   const [reply, setreply] = useState(false);
+  const [imageModal, setimageModal] = useState(false);
 
   useEffect(() => {
     const fetchFeedbackComments = async () => {
@@ -156,6 +162,27 @@ const FeedbackModal = ({
         </div>
 
         <hr className="w-full" />
+        <div className="flex flex-wrap gap-3 w-5/6 ">
+          {/* basic plan feature for feedback Uploads */}
+          {user?.plan == plans.basic &&
+            (uploads.length === 0 ? (
+              <p>Uploaded images will appear here</p>
+            ) : (
+              <>
+                <CgAttachment
+                  onClick={() => setimageModal(true)}
+                  className="text-3xl cursor-pointer "
+                />{" "}
+                <span>uploads</span>
+                {imageModal && (
+                  <FeedbackImage
+                    uploads={uploads}
+                    setimageModal={setimageModal}
+                  />
+                )}
+              </>
+            ))}
+        </div>
         <p className="w-5/6 mt-4 font-bold ">All comments</p>
         <div className="w-5/6  max-h-72 overflow-y-scroll  ">
           {comments && comments.length > 0 ? (

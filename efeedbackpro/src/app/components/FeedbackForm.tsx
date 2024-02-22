@@ -5,6 +5,7 @@ import { handleFeedbackErrors } from "@/helperfunctions/helperfunctions";
 import Loading from "./Loading";
 import { plans } from "@/state/types";
 import { FaImage } from "react-icons/fa6";
+import { UploadButton } from "../utils/uploadthing";
 
 type Props = {
   setfeebackFormModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -16,18 +17,8 @@ const FeedbackForm = ({ setfeebackFormModal, id, plan }: Props) => {
   const [description, setdescription] = useState("");
   const [clientemail, setclientemail] = useState("");
   const [loading, setloading] = useState(false);
-  const [images, setimages] = useState<FileList | null>(null);
-  const [uploadUrl, setuploadUrl] = useState([]);
 
-  const UploadImage = async (
-    ev: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    ev.preventDefault();
-    if (!images) return toast.error("No image has been Added");
-    const file = images[0];
-
-    console.log(file);
-  };
+  const [uploadUrl, setuploadUrl] = useState<string[] | []>([]);
 
   const createPost = async (ev: React.FormEvent<HTMLFormElement>) => {
     ev.preventDefault();
@@ -40,6 +31,7 @@ const FeedbackForm = ({ setfeebackFormModal, id, plan }: Props) => {
         description,
         email: clientemail,
         businessid: id,
+        uploadUrl,
       };
       setloading(true);
 
@@ -128,23 +120,41 @@ const FeedbackForm = ({ setfeebackFormModal, id, plan }: Props) => {
           </div>
 
           <div className=" mt-4 w-5/6 flex justify-end flex-col md:flex-row  gap-4 ">
-            {plan !== plans.free ? (
-              ""
+            {uploadUrl.length === 0 ? (
+              plan !== plans.free && <p>Uploaded images will appear here</p>
             ) : (
-              <label className=" ">
-                <input
-                  onChange={(ev) => setimages(ev.target.files)}
-                  type="file"
-                  name="uploadfiles"
-                  accept="image/png, image/jpeg"
-                />
-              </label>
+              <div className=" flex-1 flex flex-wrap gap-0.5  ">
+                {uploadUrl.map((item, i) => {
+                  return (
+                    <img
+                      className="flex-1 max-w-12  max-h-12 object-contain rounded "
+                      key={i}
+                      src={item}
+                      alt="uploads"
+                    />
+                  );
+                })}
+              </div>
             )}
 
-            <button className="flex gap-1 items-center" onClick={UploadImage}>
-              Upload <FaImage />{" "}
-            </button>
+            {plan === plans.free ? (
+              ""
+            ) : (
+              <UploadButton
+                endpoint="imageUploader"
+                onClientUploadComplete={(res) => {
+                  // Do something with the response
+                  // console.log("Files: ", res);
 
+                  setuploadUrl((prev) => [...prev, res[0].url]);
+                  alert("Upload Completed");
+                }}
+                onUploadError={(error: Error) => {
+                  // Do something with the error.
+                  alert(`ERROR! ${error.message}`);
+                }}
+              />
+            )}
             <button className="bg-blue-400 p-2 text-white rounded ">
               Submit
             </button>

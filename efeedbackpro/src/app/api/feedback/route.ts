@@ -37,6 +37,7 @@ export async function POST(request: NextRequest) {
       user: businessData.userid,
       business: reqbody.businessid,
       client: clientDetails._id,
+      uploads: reqbody.uploadUrl,
     });
 
     // update feedback details to clients model

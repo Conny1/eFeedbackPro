@@ -12,6 +12,7 @@ type Props = {
   comments: [string];
   business: string;
   client: string;
+  uploads: string[];
 };
 
 const Feedback = ({
@@ -23,6 +24,7 @@ const Feedback = ({
   comments,
   business,
   client,
+  uploads,
 }: Props) => {
   const [feebackModal, setfeebackModal] = useState(false);
   const data = {
@@ -34,6 +36,7 @@ const Feedback = ({
     comments,
     business,
     client,
+    uploads,
   };
 
   return (
