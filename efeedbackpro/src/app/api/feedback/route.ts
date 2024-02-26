@@ -11,7 +11,6 @@ connectToDb();
 // @route    /api/feedback/ -post
 export async function POST(request: NextRequest) {
   const reqbody = await request.json();
-
   try {
     // take userid from business and confirm if the business exist
     const businessData = await Business.findById(reqbody.businessid);
