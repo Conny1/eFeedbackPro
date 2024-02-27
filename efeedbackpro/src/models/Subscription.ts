@@ -5,6 +5,10 @@ const subSchema = new mongoose.Schema(
     useremail: {
       type: String,
     },
+    subid: {
+      type: String,
+      required: true,
+    },
     stripeid: {
       type: String,
     },

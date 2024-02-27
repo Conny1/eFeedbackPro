@@ -1,4 +1,3 @@
-import type { NextApiRequest, NextApiResponse } from "next";
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 import getRawBody from "raw-body";
@@ -54,7 +53,8 @@ export async function POST(req: NextRequest) {
         //   "customer email",
         //   (event.data.object as any).customer_details.email
         // );
-        console.log("created", (event.data.object as any).created);
+        // console.log("created", (event.data.object as any).created);
+        // console.log("subid", event.data.object.subscription);
         // update user subscription in DB
         await User.findOneAndUpdate(
           { email: (event.data.object as any).customer_details.email },
@@ -63,8 +63,9 @@ export async function POST(req: NextRequest) {
         );
 
         // add subs to DB
-        Subscriptions.create({
+        await Subscriptions.create({
           useremail: (event.data.object as any).customer_details.email,
+          subid: (event.data.object as any).subscription,
           stripeid: lineItems.data[0].id,
           amount: lineItems.data[0].price?.unit_amount_decimal,
         });

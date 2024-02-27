@@ -25,10 +25,7 @@ const SubscriptionPage = () => {
     }
   }, [user]);
 
-  const freePlan = async (
-    ev: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    ev.preventDefault();
+  const freePlan = async () => {
     setloading(true);
 
     try {
@@ -77,6 +74,33 @@ const SubscriptionPage = () => {
     }
   };
 
+  // cancel subscription
+  const cancelsubscription = async () => {
+    setloading(true);
+
+    try {
+      const resp = await fetch(`../api/user/cancelsub`, {
+        method: "POST",
+        headers: {
+          Content_Type: "application/json",
+        },
+        body: JSON.stringify({ email: userDetails?.email }),
+      });
+
+      const data = await resp.json();
+
+      if (data.status === 200) {
+        toast.success("Cancelled");
+        localStorage.setItem("user", JSON.stringify(data.user));
+        setuser(user);
+        setuserDetails(data.user);
+        setloading(false);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center flex-col ">
       <Toaster />
@@ -108,7 +132,9 @@ const SubscriptionPage = () => {
           </p>
           <div>
             {loading ? (
-              <Loading />
+              <div className="absolute w-full h-full top-0 left-0 bg-black bg-opacity-70 flex items-center justify-center ">
+                <Loading />
+              </div>
             ) : userDetails?.plan === plans.free ? (
               <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
                 Current Plan
@@ -152,8 +178,11 @@ const SubscriptionPage = () => {
 
           <div>
             {userDetails?.plan === plans.basic ? (
-              <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-                Current Plan
+              <button
+                onClick={cancelsubscription}
+                className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700"
+              >
+                cancel Plan
               </button>
             ) : (
               <Link
