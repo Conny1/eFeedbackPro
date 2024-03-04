@@ -11,6 +11,7 @@ const SubscriptionPage = () => {
   const { user, setuser } = useFeeddbackState();
   const [userDetails, setuserDetails] = useState<User>();
   const [loading, setloading] = useState(false);
+  const [paypalsub, setpaypalsub] = useState(false);
 
   const route = useRouter();
 
@@ -177,7 +178,7 @@ const SubscriptionPage = () => {
           </p>
 
           <div>
-            {userDetails?.plan === plans.basic ? (
+            {userDetails?.plan !== plans.basic ? (
               <button
                 onClick={cancelsubscription}
                 className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700"
@@ -186,7 +187,7 @@ const SubscriptionPage = () => {
               </button>
             ) : (
               <Link
-                href="https://buy.stripe.com/test_14k155drCgOo0g03cc"
+                href="https://paystack.com/pay/aadzpazy3v"
                 type="submit"
                 className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
               >
@@ -196,6 +197,7 @@ const SubscriptionPage = () => {
           </div>
         </div>
       </div>
+      {/* paypal subscription */}
     </div>
   );
 };
