@@ -1,5 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import crypto from "crypto";
+import User from "@/models/UserModel";
+import Subscriptions from "@/models/Subscription";
+import { plans } from "@/state/types";
+import { connectToDb } from "@/dbconfig/dbconfig";
+
+connectToDb();
 
 export async function POST(req: NextRequest) {
   console.log("WEbhook simulated");
@@ -19,8 +25,63 @@ export async function POST(req: NextRequest) {
       const event = rebody;
 
       // Do something with event
-      if (event && event.event === "charge.success") {
+      if (event && event.event === "subscription.create") {
         console.log("Charge is succeful");
+        // update payment and subscription details in database
+        const transactionData = event.data;
+
+        try {
+          await User.findOneAndUpdate(
+            { email: transactionData.customer.email },
+            { plan: plans.basic },
+            { new: true }
+          );
+
+          // add subs to DB
+          await Subscriptions.create({
+            useremail: transactionData.customer.email,
+            subid: transactionData.id,
+            customerid: transactionData.customer.id,
+            amount: transactionData.plan.amount,
+            planid: transactionData.plan.id,
+            plancode: transactionData.plan.plan_code,
+            authcode: transactionData.authorization.authorization_code,
+          });
+          // console.log(userData, subs);
+        } catch (error) {
+          console.log(error);
+        }
+
+        return NextResponse.json({
+          status: 200,
+          message: "Transfer successful",
+        });
+      }
+      console.log(event.event);
+
+      // cancel subscription webhook
+      if (event && event.event === "subscription.not_renew") {
+        console.log("subscription disabled");
+        // update payment and subscription details in database
+        const transactionData = event.data;
+        console.log(transactionData);
+        try {
+          await User.findOneAndUpdate(
+            { email: transactionData.customer.email },
+            { plan: "" },
+            { new: true }
+          );
+
+          // add subs to DB
+          await Subscriptions.findOneAndDelete({
+            useremail: transactionData.customer.email,
+          });
+
+          // console.log(userData, subs);
+        } catch (error) {
+          console.log(error);
+        }
+
         return NextResponse.json({
           status: 200,
           message: "Transfer successful",

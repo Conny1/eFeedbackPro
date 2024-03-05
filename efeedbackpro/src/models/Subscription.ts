@@ -5,17 +5,21 @@ const subSchema = new mongoose.Schema(
     useremail: {
       type: String,
     },
-    subid: {
+    planid: {
       type: String,
       required: true,
     },
-    stripeid: {
+    subid: {
       type: String,
     },
-
+    customerid: {
+      type: String,
+    },
     amount: {
       type: Number,
     },
+    plancode: { type: String },
+    authcode: { type: String },
   },
   { timestamps: true }
 );
