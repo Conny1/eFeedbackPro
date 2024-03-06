@@ -7,10 +7,10 @@ import AddProduct from "./AddProduct";
 import { useFeeddbackState } from "@/state/state";
 import ProductModal from "./ProductModal";
 import Link from "next/link";
+import User from "@/models/UserModel";
 
 const Header = () => {
-  const { user, dashboardfeedback, setdashboardfeedback, refetch } =
-    useFeeddbackState();
+  const { user, refetch } = useFeeddbackState();
   const [product, setproduct] = useState<Business[]>([]);
   const [productLoading, setproductLoading] = useState(false);
   const [addproductmodal, setaddproductmodal] = useState(false);
@@ -93,7 +93,7 @@ const Header = () => {
             href="/dashboard/subscription"
             className="text-xs bg-blue-400  p-1 rounded  "
           >
-            Change Plan: Free
+            Change Plan: <span className="text-red-700">{user?.plan}</span>
           </Link>
           {user && (
             <p className="text-slate-700 font-bold md:text-sm  text-xs ">

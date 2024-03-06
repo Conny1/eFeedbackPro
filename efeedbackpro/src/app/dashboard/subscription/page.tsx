@@ -188,11 +188,12 @@ const SubscriptionPage = () => {
                 onClick={cancelsubscription}
                 className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700"
               >
-                cancel Plan
+                cancel Plan/Update card
               </button>
             ) : (
               <Link
-                href="https://paystack.com/pay/aadzpazy3v"
+                // https://paystack.com/pay/aadzpazy3v - text link
+                href="https://paystack.com/pay/4-9szypn1g"
                 type="submit"
                 className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
               >

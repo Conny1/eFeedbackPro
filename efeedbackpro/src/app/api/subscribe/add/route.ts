@@ -57,7 +57,7 @@ export async function POST(req: NextRequest) {
           message: "Transfer successful",
         });
       }
-      console.log(event.event);
+      // console.log(event.event);
 
       // cancel subscription webhook
       if (event && event.event === "subscription.not_renew") {

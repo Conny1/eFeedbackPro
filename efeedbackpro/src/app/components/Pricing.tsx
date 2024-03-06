@@ -27,21 +27,25 @@ const Pricing = () => {
           </div>
         </div>
         {/* standard */}
-        <div className="bg-white p-8 rounded shadow-md flex flex-col justify-between items-center   ">
+        <div className="bg-white p-8 rounded shadow-md flex flex-col justify-between items-center">
           <h1 className="text-3xl font-bold mb-6"> Basic plan </h1>
-          <p className="mb-4  ">Starts from $40/month</p>
+          <p className="mb-4  ">Starts from KSH 6000/month</p>
           <p className="mb-4 w-4/5 bg-slate-200 p-1 ">
             - Collect Unlimited Feedback
           </p>
+          <p className="mb-4 w-4/5 bg-slate-200 p-1 ">
+            - Allow users to vote for feedback
+          </p>
+
           <p className="mb-4  w-4/5 bg-slate-200 p-1 ">
             - Collect feedback for a maximum of 5 Products
           </p>
           <p className="mb-4  w-4/5 bg-slate-200 p-1 ">
             - Reply to Each Users feedback{" "}
           </p>
-          <p className="mb-4  w-4/5 bg-slate-200 p-1 ">
+          {/* <p className="mb-4  w-4/5 bg-slate-200 p-1 ">
             - Embeded link to collect feedback directly from your site
-          </p>
+          </p> */}
 
           {/* <p className="mb-4  w-4/5 bg-slate-200 p-1 ">
             - Add users to help manage feedback
@@ -52,12 +56,12 @@ const Pricing = () => {
 
           <form>
             {/* Your form fields go here */}
-            <button
-              type="submit"
+            <Link
+              href="/auth"
               className="bg-blue-400 text-white px-4 py-2 rounded hover:bg-blue-600"
             >
-              coming soon by April 1st
-            </button>
+              Get started
+            </Link>
           </form>
         </div>
       </div>

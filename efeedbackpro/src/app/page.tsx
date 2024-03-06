@@ -271,6 +271,7 @@ const Home: React.FC = () => {
               </ul>
             </div>
           </div> */}
+          <p>Support: werabyte@gmail.com</p>
         </div>
       </footer>
     </div>
