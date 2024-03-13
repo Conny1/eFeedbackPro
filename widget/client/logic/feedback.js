@@ -7,8 +7,17 @@ export class FeedbackWidget {
     this.initializeStyles();
   }
   getbusinessid() {
-    const urlParams = new URLSearchParams(window.location.search);
+    // Get the script element
+    const scriptElement = document.currentScript;
+
+    // Extract the URL of the script
+    const scriptUrl = scriptElement.src;
+
+    // Parse the URL to get the id parameter
+    const urlParams = new URLSearchParams(scriptUrl.split("?")[1]);
     const id = urlParams.get("id");
+
+    // Now you can use the id parameter as needed
     console.log("ID:", id);
     return id;
   }
