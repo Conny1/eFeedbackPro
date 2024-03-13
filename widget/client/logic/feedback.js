@@ -2,8 +2,15 @@ export class FeedbackWidget {
   constructor({ position = "bottom-right" } = {}) {
     this.position = this.getposition(position);
     this.open = false;
+    this.businessid = this.getbusinessid();
     this.initialize();
     this.initializeStyles();
+  }
+  getbusinessid() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const id = urlParams.get("id");
+    console.log("ID:", id);
+    return id;
   }
 
   getposition(position) {
@@ -66,16 +73,38 @@ export class FeedbackWidget {
     // submit btn
     const submitBtn = document.createElement("button");
     submitBtn.innerText = "Submit";
-    submitBtn.addEventListener("click", (event) => {
+    submitBtn.addEventListener("click", async (event) => {
       event.preventDefault();
       const formData = {
         email: email.value,
         title: feedbackTitle.value,
-        desc: feedbackmessage.value,
-        bussnessid: "dhdhdhhd",
+        description: feedbackmessage.value,
+        businessid: "65c8e8fe54db33b9b0f3bb4f",
       };
+      if (!email.value || !feedbackTitle.value || !feedbackmessage.value)
+        return alert("Provide all fields");
+      try {
+        const resp = await fetch("http://localhost:5173/api/feedback/", {
+          method: "POST",
+          headers: {
+            "content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        });
+        const data = await resp.json();
 
-      console.log(formData);
+        if (data.status === 200) {
+          email.value = "";
+          feedbackTitle.value = "";
+          feedbackmessage.value = "";
+          alert("Thank you for your feedback");
+        } else {
+          alert("Error. Try again.");
+        }
+      } catch (error) {
+        alert("Error. Try again.");
+        console.log(error);
+      }
     });
 
     //
