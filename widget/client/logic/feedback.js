@@ -7,8 +7,8 @@ export class FeedbackWidget {
     this.initializeStyles();
   }
   getbusinessid() {
-    // Get the script element
-    const scriptElement = document.currentScript;
+    // Find the script element by its src attribute
+    const scriptElement = document.querySelector("script");
 
     // Extract the URL of the script
     const scriptUrl = scriptElement.src;
@@ -19,6 +19,7 @@ export class FeedbackWidget {
 
     // Now you can use the id parameter as needed
     console.log("ID:", id);
+
     return id;
   }
 
