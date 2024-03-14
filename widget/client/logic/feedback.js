@@ -89,18 +89,22 @@ export class FeedbackWidget {
         email: email.value,
         title: feedbackTitle.value,
         description: feedbackmessage.value,
-        businessid: "65c8e8fe54db33b9b0f3bb4f",
+        businessid: this.businessid,
       };
       if (!email.value || !feedbackTitle.value || !feedbackmessage.value)
         return alert("Provide all fields");
       try {
-        const resp = await fetch("http://localhost:5173/api/feedback/", {
-          method: "POST",
-          headers: {
-            "content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        });
+        // "http://localhost:5173/api/feedback/
+        const resp = await fetch(
+          "https://widget.efeedbackpro.com/api/feedback/",
+          {
+            method: "POST",
+            headers: {
+              "content-Type": "application/json",
+            },
+            body: JSON.stringify(formData),
+          }
+        );
         const data = await resp.json();
 
         if (data.status === 200) {
@@ -174,19 +178,23 @@ export class FeedbackWidget {
     .feedbackform input{
         width:90%;
         height:30px;
-        outline:1px solid black;
+        outline:none;
         border-radius:5px;
         border:none;
+        padding-left:10px;
         transition:  .2s ease;
         font-family: Helvetica, Arial ,sans-serif;
     }
 
     .feedbackform textarea{
         width:90%;
+        font-size:15px;
         min-height:70px;
-        outline:1px solid black;
+        outline:none;
         border-radius:5px;
         border:none;
+        padding-left:10px;
+        over-flow-y:scroll;
     }
     .feedbackform button{
         padding:9px;
