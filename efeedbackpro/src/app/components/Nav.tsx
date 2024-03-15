@@ -25,6 +25,14 @@ const Nav = () => {
                 About Us
               </a>
             </li> */}
+            <li>
+              <a
+                href="/documentations"
+                className="p-1 cursor-pointer border-2 border-blue-400 text-white-1 font-bold sm:py-2 sm:px-4 rounded-md hover:bg-blue-400 hover:text-white transition duration-300"
+              >
+                Documentation
+              </a>
+            </li>
 
             <li>
               <a

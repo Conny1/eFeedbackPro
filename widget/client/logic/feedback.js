@@ -5,10 +5,12 @@ export class FeedbackWidget {
     this.businessid = this.getbusinessid();
     this.initialize();
     this.initializeStyles();
+    this.submit = false;
   }
   getbusinessid() {
     // Find the script element by its src attribute
     const scriptElement = document.getElementById("scripttagid");
+    console.log(scriptElement);
 
     // Extract the URL of the script
     const scriptUrl = scriptElement.src;
@@ -80,6 +82,12 @@ export class FeedbackWidget {
     const feedbackmessage = document.createElement("textarea");
     feedbackmessage.placeholder = "More information about your feedback";
     feedbackmessage.required = true;
+    //loading functionality after submiting
+    const loading = document.createElement("p");
+    loading.innerText = "Loading....";
+    loading.style.color = "white";
+    loading.style.display = "none";
+    this.getfeedbackForm.appendChild(loading);
     // submit btn
     const submitBtn = document.createElement("button");
     submitBtn.innerText = "Submit";
@@ -95,6 +103,10 @@ export class FeedbackWidget {
         return alert("Provide all fields");
       try {
         // "http://localhost:5173/api/feedback/
+
+        submitBtn.style.display = "none";
+        loading.style.display = "block";
+
         const resp = await fetch(
           "https://widget.efeedbackpro.com/api/feedback/",
           {
@@ -107,6 +119,8 @@ export class FeedbackWidget {
         );
         const data = await resp.json();
 
+        submitBtn.style.display = "block";
+        loading.style.display = "none";
         if (data.status === 200) {
           email.value = "";
           feedbackTitle.value = "";
@@ -120,8 +134,6 @@ export class FeedbackWidget {
         console.log(error);
       }
     });
-
-    //
 
     this.getfeedbackForm.appendChild(email);
     this.getfeedbackForm.appendChild(feedbackTitle);
@@ -150,9 +162,9 @@ export class FeedbackWidget {
     .mainContainer{
         // outline:1px solid red;
         display:flex;
-        height:300px;
+        height: fit-content
         flex-direction:column-reverse;
-        width:300px;
+        width: fit-content;
         // justify-content:center;
         align-items:center;    
         gap:5px;
@@ -163,14 +175,16 @@ export class FeedbackWidget {
     } 
     .feedbackform{
         // outline:1px solid yellow;
+        height:300px;
+        width:300px;
         border-radius:5px;
         background-color:#24c2ff;
         display:flex;
         flex-direction:column;
-        width:90%;
+      
         justify-content:space-evenly;
         align-items:center;
-        height:100%;
+      
         padding:10px;
     } 
 

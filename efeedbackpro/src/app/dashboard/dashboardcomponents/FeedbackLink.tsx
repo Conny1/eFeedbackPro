@@ -6,20 +6,21 @@ import toast, { Toaster } from "react-hot-toast";
 type Props = {
   _id: string;
   setlink: React.Dispatch<React.SetStateAction<boolean>>;
+  linkurl: string;
+  text: string;
+  link?: string;
 };
 
-const FeedbackLink = ({ _id, setlink }: Props) => {
+const FeedbackLink = ({ _id, setlink, linkurl, text, link }: Props) => {
   return (
-    <div className=" p-3.5 rounded absolute bg-slate-300  max-w-full ">
+    <div className=" p-3.5 rounded  absolute bg-slate-300  max-w-full ">
       <FaWindowClose onClick={() => setlink(false)} />
-      <p className="text-sm  font-bold  ">
-        send link to users to collect feedback
-      </p>
+      <p className="text-sm  font-bold  ">{text}</p>
       <Toaster />
       {/* coppy to clipboard btn */}
       <button
         onClick={() => {
-          copy(`${process.env.NEXT_PUBLIC_SITE_URL}/${_id} `);
+          copy(link ? `${linkurl}?id=${_id}` : `${linkurl}/${_id}`);
           toast.success("Link copied");
         }}
         className="bg-blue-400 text-xs p-1 font-bold rounded"
@@ -27,7 +28,7 @@ const FeedbackLink = ({ _id, setlink }: Props) => {
         copy
       </button>
       <p className="text-sm bg-slate-100 p-1 rounded max-w-64 md:max-w-full overflow-y-scroll ">
-        {`${process.env.NEXT_PUBLIC_SITE_URL}/${_id} `}
+        {link ? `${linkurl}?id=${_id}` : `${linkurl}/${_id}`}
       </p>
     </div>
   );

@@ -43,9 +43,12 @@ const Pricing = () => {
           <p className="mb-4  w-4/5 bg-slate-200 p-1 ">
             - Reply to Each Users feedback{" "}
           </p>
-          {/* <p className="mb-4  w-4/5 bg-slate-200 p-1 ">
-            - Embeded link to collect feedback directly from your site
-          </p> */}
+          <p className="mb-4  w-4/5 bg-slate-200 p-1 ">
+            - Widget to collect feedback directly from your website
+          </p>
+          <p className="mb-4  w-4/5 bg-slate-200 p-1 ">
+            - Assistance in intergrating the widget
+          </p>
 
           {/* <p className="mb-4  w-4/5 bg-slate-200 p-1 ">
             - Add users to help manage feedback

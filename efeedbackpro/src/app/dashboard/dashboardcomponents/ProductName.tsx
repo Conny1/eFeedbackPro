@@ -23,6 +23,7 @@ const ProductName = ({ name, _id, setselectedProduct }: Props) => {
   const [link, setlink] = useState(false);
   const [edit, setedit] = useState(false);
   const [productname, setproductname] = useState(name);
+  const [widget, setwidget] = useState(false);
 
   const fetchFeedback = async () => {
     const id = _id;
@@ -90,13 +91,36 @@ const ProductName = ({ name, _id, setselectedProduct }: Props) => {
       >
         Feedback link
       </button>
-      {link && <FeedbackLink _id={_id} setlink={setlink} />}
+      {link && (
+        <FeedbackLink
+          text="send link to users to collect feedback "
+          _id={_id}
+          setlink={setlink}
+          linkurl={process.env.NEXT_PUBLIC_SITE_URL as string}
+        />
+      )}
       {edit && (
         <EditProductName
           name={productname}
           setproductname={setproductname}
           setedit={setedit}
           id={_id}
+        />
+      )}
+      {/* scriptag link for the widget */}
+      <button
+        onClick={() => setwidget(true)}
+        className="bg-slate-200 text-slate-700 text-l flex-1 rounded "
+      >
+        widget link
+      </button>
+      {widget && (
+        <FeedbackLink
+          link="widget"
+          text="Add link to script tag to integrate widget in your site"
+          _id={_id}
+          setlink={setwidget}
+          linkurl={process.env.NEXT_PUBLIC_WIDGET_URL as string}
         />
       )}
     </div>

@@ -93,7 +93,7 @@ const Header = () => {
             href="/dashboard/subscription"
             className="text-xs bg-blue-400  p-1 rounded  "
           >
-            Change Plan: <span className="text-red-700">{user?.plan}</span>
+            Billing: <span className="text-red-700">{user?.plan}</span>
           </Link>
           {user && (
             <p className="text-slate-700 font-bold md:text-sm  text-xs ">
