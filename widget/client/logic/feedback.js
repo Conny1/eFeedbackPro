@@ -8,7 +8,7 @@ export class FeedbackWidget {
   }
   getbusinessid() {
     // Find the script element by its src attribute
-    const scriptElement = document.querySelector("script");
+    const scriptElement = document.getElementById("scripttagid");
 
     // Extract the URL of the script
     const scriptUrl = scriptElement.src;
