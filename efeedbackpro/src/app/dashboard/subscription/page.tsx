@@ -26,6 +26,9 @@ const SubscriptionPage = () => {
   }, [user]);
 
   const freePlan = async () => {
+    if (user?.plan === plans.basic) {
+      return toast.error(`Unsubscribe from ${plans.basic} package first`);
+    }
     setloading(true);
 
     try {

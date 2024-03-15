@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import { MdDelete, MdEdit } from "react-icons/md";
 import EditProductName from "./EditProductName";
 import { toast } from "react-hot-toast";
+import { plans } from "@/state/types";
 
 type Props = {
   name: string;
@@ -14,6 +15,7 @@ type Props = {
 
 const ProductName = ({ name, _id, setselectedProduct }: Props) => {
   const {
+    user,
     setdashboardfeedback,
     dashboardfeedback,
     setrefetchFeeddback,
@@ -108,12 +110,14 @@ const ProductName = ({ name, _id, setselectedProduct }: Props) => {
         />
       )}
       {/* scriptag link for the widget */}
-      <button
-        onClick={() => setwidget(true)}
-        className="bg-slate-200 text-slate-700 text-l flex-1 rounded "
-      >
-        widget link
-      </button>
+      {user?.plan === plans.basic ? (
+        <button
+          onClick={() => setwidget(true)}
+          className="bg-slate-200 text-slate-700 text-l flex-1 rounded "
+        >
+          widget link
+        </button>
+      ) : null}
       {widget && (
         <FeedbackLink
           link="widget"

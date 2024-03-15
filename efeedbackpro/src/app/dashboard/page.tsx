@@ -11,7 +11,7 @@ const Dashboard = () => {
   useEffect(() => {
     const script = document.createElement("script");
     script.src =
-      "https://raw.githack.com/Conny1/eFeedbackPro/main/widget/client/main.js?id=65e83192d5895fe8be97482c";
+      "https://rawcdn.githack.com/Conny1/eFeedbackPro/4c74318c0e1a9c84c16ddc23c0a2ad1c97182d3a/widget/client/main.js?id=65e83192d5895fe8be97482c";
     script.async = true;
     script.type = "module";
     script.id = "scripttagid"; // <!-- Add this id, it's crucial for the code to work -->
