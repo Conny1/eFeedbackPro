@@ -4,7 +4,6 @@ import toast, { Toaster } from "react-hot-toast";
 import { handleFeedbackErrors } from "@/helperfunctions/helperfunctions";
 import Loading from "./Loading";
 import { plans } from "@/state/types";
-import { FaImage } from "react-icons/fa6";
 import { UploadButton } from "../utils/uploadthing";
 
 type Props = {
@@ -17,7 +16,6 @@ const FeedbackForm = ({ setfeebackFormModal, id, plan }: Props) => {
   const [description, setdescription] = useState("");
   const [clientemail, setclientemail] = useState("");
   const [loading, setloading] = useState(false);
-
   const [uploadUrl, setuploadUrl] = useState<string[] | []>([]);
 
   const createPost = async (ev: React.FormEvent<HTMLFormElement>) => {
@@ -151,6 +149,7 @@ const FeedbackForm = ({ setfeebackFormModal, id, plan }: Props) => {
                 }}
                 onUploadError={(error: Error) => {
                   // Do something with the error.
+                  // console.log(error)
                   alert(`ERROR! ${error.message}`);
                 }}
               />
