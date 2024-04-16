@@ -29,7 +29,7 @@ const Pricing = () => {
         {/* standard */}
         <div className="bg-white p-8 rounded shadow-md flex flex-col justify-between items-center">
           <h1 className="text-3xl font-bold mb-6"> Basic plan </h1>
-          <p className="mb-4  ">Starts from KSH 6000/month</p>
+          <p className="mb-4  ">Starts from KES 3500/month</p>
           <p className="mb-4 w-4/5 bg-slate-200 p-1 ">
             - Collect Unlimited Feedback
           </p>
@@ -41,10 +41,10 @@ const Pricing = () => {
             - Collect feedback for a maximum of 5 Products
           </p>
           <p className="mb-4  w-4/5 bg-slate-200 p-1 ">
-            - Reply to Each Users feedback{" "}
+            - Reply to Each Users feedback
           </p>
           <p className="mb-4  w-4/5 bg-slate-200 p-1 ">
-            - Widget to collect feedback directly from your website
+            - Widget to collect feedback directly from your website or platform
           </p>
           <p className="mb-4  w-4/5 bg-slate-200 p-1 ">
             - Assistance in intergrating the widget
@@ -54,7 +54,7 @@ const Pricing = () => {
             - Add users to help manage feedback
           </p> */}
           <p className="mb-4  w-4/5 bg-slate-200 p-1 ">
-            - File uploads in feedback collection
+            - File uploads by your users in feedback collection
           </p>
 
           <form>
